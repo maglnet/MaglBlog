@@ -1,0 +1,27 @@
+<?php
+/* @var $blogPost MaglBlog\Entity\BlogPost */
+
+$this->headTitle($blogPost->getTitle());
+
+$createDate = $blogPost->getCreateDate();
+
+?>
+<div class="row">
+    <div class="col-md-12" itemscope itemtype="http://schema.org/BlogPosting">
+		<h2 itemprop="name"><?php echo $this->escapeHtml($blogPost->getTitle()); ?></h2>
+		<p class="text-muted">
+		<?php foreach($blogPost->getTags() as $tag) : ?>
+		<span class="label label-default"><?=$this->escapeHtml($tag->getName())?></span>
+		<?php endforeach; ?>
+		</p>
+		<p class="text-muted">
+			Created <time itemprop="dateCreated" datetime="<?=$createDate->format('Y-m-d')?>"><?php echo $this->dateFormat($blogPost->getCreateDate(), IntlDateFormatter::LONG, IntlDateFormatter::NONE);?></time>
+		</p>
+		<?php if ($blogPost->getCategory()): ?>
+		<p class="text-muted">
+			Category: <?php echo $this->escapeHtml($blogPost->getCategory()->getName()); ?>
+		</p>
+		<?php endif; ?>
+		<div itemprop="text"><?php echo $this->markdown($blogPost->getText()); ?></div>
+    </div>
+</div>

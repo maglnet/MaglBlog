@@ -1,0 +1,33 @@
+<?php
+$title = 'Blog';
+$this->headTitle($title);
+?>
+<div class="row">
+    <div class="col-md-12">
+		<a class="btn btn-default" href="<?php echo $this->url('zfcadmin/maglblog', array('action' => 'createPost'));?>">Create New Blog Post</a>
+		<a class="btn btn-default" href="<?php echo $this->url('zfcadmin/maglblog', array('action' => 'editCategory'));?>">Create New Category</a>
+		<table class="table table-striped">
+			<tr>
+				<th>#</th>
+				<th>Title</th>
+				<th>Created</th>
+				<th>Modified</th>
+				<th>&nbsp;</th>
+			</tr>
+
+			<?php foreach ($blogPosts as $post) : ?>
+				<tr>
+					<td><?php echo $this->escapeHtml($post->getId()); ?></td>
+					<td><?php echo $this->escapeHtml($post->getTitle()); ?></td>
+					<td><?php echo $this->dateFormat($post->getCreateDate(), IntlDateFormatter::SHORT, IntlDateFormatter::SHORT);; ?></td>
+					<td><?php echo $this->dateFormat($post->getUpdateDate(), IntlDateFormatter::SHORT, IntlDateFormatter::SHORT);; ?></td>
+					<td>
+						<a href="<?php echo $this->url('zfcadmin/maglblog', array('action' => 'editPost', 'id' => $post->getId()));?>">Edit</a>
+						<a href="<?php echo $this->url('zfcadmin/maglblog', array('action' => 'deletePost', 'id' => $post->getId()));?>">Delete</a>
+					</td>
+				</tr>
+			<?php endforeach; ?>
+		</table>
+    </div>
+</div>
+

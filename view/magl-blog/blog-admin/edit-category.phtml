@@ -1,0 +1,23 @@
+<?php
+/* @var $form \Zend\Form\Form */
+
+// module/Album/view/album/album/edit.phtml:
+
+$title = 'Edit category';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php
+
+$form = $this->form;
+$form->setAttribute(
+		'action', $this->url('zfcadmin/maglblog', array(
+			'action' => 'editCategory',
+			'id' => $this->id,
+				)
+));
+$form->prepare();
+
+
+echo $this->form()->render($form);

@@ -1,0 +1,28 @@
+<?php
+if ($post->getCategory()) {
+	$categoryUrl = $this->url('maglblog/category', array('id' => $post->getCategory()->getId(), 'title' => $post->getCategory()->getName()));
+}
+?>
+<h2>
+	<a href="<?= $this->escapeHtmlAttr($this->BlogUrlToPost($post)) ?>"><?php echo $this->escapeHtml($post->getTitle()); ?></a>
+</h2>
+<p class="text-muted">
+<div>
+	<?php foreach ($post->getTags() as $tag) : ?>
+		<span class="label label-default"><?= $this->escapeHtml($tag->getName()) ?></span>
+	<?php endforeach; ?>
+</div>
+</p>
+<p class="text-muted">
+<div>
+	<?php echo $this->dateFormat($post->getCreateDate(), IntlDateFormatter::LONG, IntlDateFormatter::NONE); ?>
+	<?php if ($post->getCategory()): ?>
+		in <a href="<?= $this->escapeHtmlAttr($categoryUrl) ?>"><?php echo $this->escapeHtml($post->getCategory()->getName()); ?></a>
+	<?php endif; ?>
+</div>
+<p>
+	<?php echo $this->markdown($post->getTeaserText()); ?>
+</p>
+<p>
+	<a class="btn btn-default btn-xs" href="<?= $this->escapeHtmlAttr($this->BlogUrlToPost($post)) ?>">read...</a>
+</p>

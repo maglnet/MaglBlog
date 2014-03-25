@@ -1,0 +1,14 @@
+<div class="panel panel-default">
+	<div class="panel-heading">Blog Categories</div>
+	<div class="panel-body">
+		<ul class="list-unstyled">
+			<?php foreach ($categories as $category): ?>
+				<li>
+					<a href="<?= $this->url('maglblog/category', array('id' => $category['category']->getId(), 'title' => $category['category']->getName())); ?>">
+						<?= $this->escapeHtml($category['category']->getName()) . '&nbsp;' . $this->escapeHtml('(' . $category['activeBlogCount'] . ')') ?>
+					</a>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+</div>

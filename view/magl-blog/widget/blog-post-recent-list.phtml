@@ -1,0 +1,17 @@
+<div class="panel panel-default">
+	<div class="panel-heading">Recent Posts</div>
+	<div class="panel-body">
+		<ul class="list-unstyled">
+			<?php foreach ($blogPosts as $blogPost): 
+				/* @var $blogPost MaglBlog\Entity\BlogPost */
+				?>
+				<li>
+					<a href="<?= $this->BlogUrlToPost($blogPost); ?>">
+						<span class="text-muted"><?= $this->dateFormat($blogPost->getCreateDate(), IntlDateFormatter::SHORT, IntlDateFormatter::SHORT) ?></span><br/>
+						<?= $this->escapeHtml($blogPost->getTitle()) ?>
+					</a>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+</div>

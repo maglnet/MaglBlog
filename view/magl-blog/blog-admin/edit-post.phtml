@@ -1,0 +1,48 @@
+<?php
+/* @var $form \Zend\Form\Form */
+
+$title = 'Edit blog post';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php
+$form = $this->form;
+$form->setAttribute(
+	'action', $this->url('zfcadmin/maglblog', array(
+		'action' => 'editPost',
+		'id' => $this->id,
+		)
+));
+$form->prepare();
+
+
+echo $this->form()->openTag($form);
+
+/* @var $blogPostFieldset \MaglBlog\Form\BlogPostFieldset */
+$blogPostFieldset = $form->get('blog_post');
+
+foreach ($blogPostFieldset as $element) {
+	?>
+	<div class="form-group">
+	    <?=$element->getLabel() ? $this->formLabel($element) : ''?>
+		<?=$this->formElement($element);?>
+		<?=$this->formElementErrors($element);?>
+	</div>
+	<?php
+}
+
+//echo $this->formRow($product->get('name'));
+//echo $this->formRow($product->get('price'));
+//echo $this->formCollection($product->get('categories'));
+//
+//$brand = $product->get('brand');
+//
+//echo $this->formRow($brand->get('name'));
+//echo $this->formRow($brand->get('url'));
+//
+//echo $this->formHidden($form->get('csrf'));
+//echo $this->formElement($form->get('submit'));
+//
+echo $this->formElement($form->get('submit'));
+echo $this->form()->closeTag();
