@@ -7,15 +7,18 @@
 
 namespace MaglBlog\View\Helper;
 
+use MaglBlog\Entity\BlogPost;
+use Zend\View\Helper\AbstractHelper;
+
 /**
  * Description of BlogWidgetCategories
  *
  * @author matthias
  */
-class BlogUrlToPost extends \Zend\View\Helper\AbstractHelper
+class BlogUrlToPost extends AbstractHelper
 {
 	
-	public function __invoke(\MaglBlog\Entity\BlogPost $blogPost){
+	public function __invoke(BlogPost $blogPost){
 		$url = $this
 			->getView()
 			->url('maglblog/post', 

@@ -7,20 +7,23 @@
 
 namespace MaglBlog\View\Helper;
 
+use MaglBlog\Repository\CategoryRepository;
+use Zend\View\Helper\AbstractHelper;
+
 /**
  * Description of BlogWidgetCategories
  *
  * @author matthias
  */
-class BlogWidgetCategories extends \Zend\View\Helper\AbstractHelper
+class BlogWidgetCategories extends AbstractHelper
 {
 	/**
 	 * 
-	 * @var \MaglBlog\Repository\Category
+	 * @var CategoryRepository
 	 */
 	private $categoryRepo;
 	
-	public function __construct(\MaglBlog\Repository\Category $categoryRepository)
+	public function __construct(CategoryRepository $categoryRepository)
 	{
 		$this->categoryRepo = $categoryRepository;
 	}

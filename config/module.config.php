@@ -28,8 +28,8 @@ return array(
 	'service_manager' => array(
 		'factories' => array(
 			'MaglBlog\TagService' => 'MaglBlog\Service\TagService',
-			'MaglBlog\CategoryService' => 'MaglBlog\Service\Category',
-			'MaglBlog\BlogPostService' => 'MaglBlog\Service\BlogPost',
+			'MaglBlog\CategoryService' => 'MaglBlog\Service\CategoryService',
+			'MaglBlog\BlogPostService' => 'MaglBlog\Service\BlogPostService',
 			'MaglBlog\TagRepository' => 'MaglBlog\Repository\TagFactory',
 			'MaglBlog\CategoryRepository' => 'MaglBlog\Repository\CategoryFactory',
 			'MaglBlog\BlogPostRepository' => 'MaglBlog\Repository\BlogPostFactory',

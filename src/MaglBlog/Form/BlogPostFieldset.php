@@ -8,11 +8,10 @@
 namespace MaglBlog\Form;
 
 use Doctrine\ORM\EntityManagerInterface;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use MaglBlog\Entity\BlogPost;
 use Zend\Form\Fieldset;
-use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterProviderInterface;
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 
 /**
  * Description of BlogPostForm

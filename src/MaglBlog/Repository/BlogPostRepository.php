@@ -14,7 +14,7 @@ use Doctrine\ORM\EntityRepository;
  *
  * @author matthias
  */
-class BlogPost extends EntityRepository
+class BlogPostRepository extends EntityRepository
 {
 
 	public function findRecent()

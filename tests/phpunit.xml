@@ -3,7 +3,7 @@
 <phpunit bootstrap="Bootstrap.php" colors="true">
 	<testsuites>
 		<testsuite name="MaglBlog">
-			<directory>./MaglMBlogTest</directory>
+			<directory>./MaglBlogTest</directory>
 		</testsuite>
 	</testsuites>
 	<filter>

@@ -3,6 +3,7 @@
 namespace MaglBlogTest;
 
 use MaglBlog\Module;
+use PHPUnit_Framework_TestCase;
 use Zend\View\HelperPluginManager;
 
 /**
@@ -10,7 +11,7 @@ use Zend\View\HelperPluginManager;
  *
  * @author matthias
  */
-class ModuleTest extends \PHPUnit_Framework_TestCase
+class ModuleTest extends PHPUnit_Framework_TestCase
 {
 
 	/**

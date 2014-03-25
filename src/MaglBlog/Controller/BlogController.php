@@ -88,7 +88,7 @@ class BlogController extends AbstractActionController implements FactoryInterfac
 			$blogPostRepo = $this->getEntityManager()->getRepository('\MaglBlog\Entity\BlogPost');
 			$blogPost = $blogPostRepo->findOneBy(array('id' => $this->params('id')));
 
-			if (empty($this->params('title')) || $this->params('title') != $blogPost->getTitleForUrl()) {
+			if (!$this->params('title') || $this->params('title') != $blogPost->getTitleForUrl()) {
 				$this->redirect()
 						->toRoute('maglblog/post', array('id' => $blogPost->getId(), 'title' => $blogPost->getTitleForUrl()))
 						->setStatusCode(301)

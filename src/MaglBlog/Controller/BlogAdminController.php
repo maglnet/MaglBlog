@@ -18,6 +18,7 @@ use MaglBlog\Form\CategoryForm;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\ServiceManager;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -36,7 +37,7 @@ class BlogAdminController extends AbstractActionController implements FactoryInt
 
 	/**
 	 *
-	 * @var \Zend\ServiceManager\ServiceManager
+	 * @var ServiceManager
 	 */
 	private $sm;
 

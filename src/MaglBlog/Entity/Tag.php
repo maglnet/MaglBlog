@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="MaglBlog\Repository\Tag")
+ * @ORM\Entity(repositoryClass="MaglBlog\Repository\TagRepository")
  * @ORM\Table(name="maglblog_tag")
  * 
  */

@@ -10,25 +10,24 @@ namespace MaglBlog\Service;
 use DoctrineORMModule\Options\EntityManager;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\View\Model\ViewModel;
 
 /**
  * Description of Category
  *
  * @author matthias
  */
-class BlogPost implements FactoryInterface
+class CategoryService implements FactoryInterface
 {
 
 	/**
 	 *
-	 * @var \MaglBlog\Repository\BlogPost
+	 * @var \MaglBlog\Repository\Category
 	 */
-	private $blogPostRepo;
+	private $categoryRepo;
 
 	public function createService(ServiceLocatorInterface $serviceLocator)
 	{
-		$this->blogPostRepo = $serviceLocator->get('MaglBlog\BlogPostRepository');
+		$this->categoryRepo = $serviceLocator->get('MaglBlog\CategoryRepository');
 		return $this;
 	}
 
@@ -41,9 +40,9 @@ class BlogPost implements FactoryInterface
 		return $this->em;
 	}
 
-	public function getRecent()
+	public function getListForWidget()
 	{
-		$recentBlogPosts = $this->blogPostRepo->findRecent();
-		return $recentBlogPosts;
+		$categories = $this->categoryRepo->findBy(array(), array('name' => 'ASC'));
+		return $categories;
 	}
 }

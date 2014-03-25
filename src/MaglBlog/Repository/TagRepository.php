@@ -8,22 +8,25 @@
 namespace MaglBlog\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Description of Category
  *
  * @author matthias
  */
-class Category extends EntityRepository 
+class TagRepository extends EntityRepository 
 {
 
-	public function findWithActivePostsCount()
+	public function findWithPostCount()
 	{
 		$em = $this->getEntityManager();
-		$query = $em->createQuery('SELECT c as category, count(p.id) as activeBlogCount FROM MaglBlog\Entity\Category c JOIN c.blogPosts p GROUP BY c.id');
+		$query = $em->createQuery('SELECT t as tag, count(p.id) as postCount FROM MaglBlog\Entity\Tag t JOIN t.blogPosts p GROUP BY t.id');
 		$result = $query->getResult();
 		return $result;
+	}
+	
+	public function findOneByUrlPart($urlPart)
+	{
+		return $this->findOneBy(array('url_part' => $urlPart));
 	}
 }

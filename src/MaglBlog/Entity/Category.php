@@ -6,9 +6,10 @@
  */
 
 namespace MaglBlog\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 /**
- * @ORM\Entity(repositoryClass="MaglBlog\Repository\Category")
+ * @ORM\Entity(repositoryClass="MaglBlog\Repository\CategoryRepository")
  * @ORM\Table(name="maglblog_category")
  * 
  */
@@ -29,7 +30,7 @@ class Category
 	protected $name;
 	
 	/**
-	 * @ORM\OneToMany(targetEntity="MaglBlog\Entity\BlogPost", mappedBy="category")
+	 * @ORM\OneToMany(targetEntity="BlogPost", mappedBy="category")
 	 * @ORM\OrderBy({"createDate" = "DESC"})
 	 */
 	protected $blogPosts;

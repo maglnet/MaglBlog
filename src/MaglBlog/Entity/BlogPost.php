@@ -10,13 +10,9 @@ namespace MaglBlog\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Exception;
-use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\InputFilterAwareInterface;
-use Zend\InputFilter\InputFilterInterface;
 
 /**
- * @ORM\Entity(repositoryClass="MaglBlog\Repository\BlogPost")
+ * @ORM\Entity(repositoryClass="MaglBlog\Repository\BlogPostRepository")
  * @ORM\Table(name="maglblog_blogpost")
  * 
  */

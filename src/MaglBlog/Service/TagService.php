@@ -7,7 +7,10 @@
 
 namespace MaglBlog\Service;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityRepository;
+use MaglBlog\Entity\Tag;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -35,7 +38,7 @@ class TagService implements FactoryInterface
 
 	public function getTagCollectionFromString($tagString)
 	{
-		$tagCollection = new \Doctrine\Common\Collections\ArrayCollection();
+		$tagCollection = new ArrayCollection();
 
 		$tagNames = explode($this->tagSeparator, $tagString);
 		foreach ($tagNames as $tagName) {
@@ -44,7 +47,7 @@ class TagService implements FactoryInterface
 				$tagNameUrl = $this->urlifyTagName($tagName);
 				$tagEntity = $this->tagRepo->findOneBy(array('url_part' => $tagNameUrl));
 				if (!$tagEntity) {
-					$tagEntity = new \MaglBlog\Entity\Tag();
+					$tagEntity = new Tag();
 					$tagEntity->setName($tagName);
 				}
 				$tagEntity->setUrlPart($tagNameUrl);
@@ -55,7 +58,7 @@ class TagService implements FactoryInterface
 		return $tagCollection;
 	}
 
-	public function getTagCollectionAsString(\Doctrine\Common\Collections\Collection $tagCollection)
+	public function getTagCollectionAsString(Collection $tagCollection)
 	{
 		$tagString = '';
 		foreach ($tagCollection as $tag) {

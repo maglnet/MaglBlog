@@ -4,8 +4,7 @@ namespace MaglBlogTest;
 
 use RuntimeException;
 use Zend\Loader\AutoloaderFactory;
-use Zend\Mvc\Service\ServiceManagerConfig;
-use Zend\ServiceManager\ServiceManager;
+use Zend\Mvc\Application;
 
 error_reporting(E_ALL | E_STRICT);
 chdir(__DIR__);
@@ -41,17 +40,14 @@ class Bootstrap
 				'MaglBlog',
 			)
 		);
-		$serviceManager = new ServiceManager(new ServiceManagerConfig());
-        $serviceManager->setService('ApplicationConfig', $config);
-        $serviceManager->get('ModuleManager')->loadModules();
-        static::$serviceManager = $serviceManager;
-		//$app = Application::init($config);
-		//static::$serviceManager = $app->getServiceManager();
+
+		$app = Application::init($config);
+		static::$serviceManager = $app->getServiceManager();
 	}
 
 	/**
 	 * 
-	 * @return ServiceManager
+	 * @return \Zend\ServiceManager\ServiceManager
 	 */
 	public static function getServiceManager()
 	{
@@ -92,6 +88,6 @@ class Bootstrap
 		}
 		return $dir . '/' . $path;
 	}
-}
 
+}
 Bootstrap::init();

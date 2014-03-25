@@ -7,20 +7,23 @@
 
 namespace MaglBlog\View\Helper;
 
+use MaglBlog\Repository\BlogPostRepository;
+use Zend\View\Helper\AbstractHelper;
+
 /**
  * Description of BlogWidgetCategories
  *
  * @author matthias
  */
-class BlogWidgetRecentPosts extends \Zend\View\Helper\AbstractHelper
+class BlogWidgetRecentPosts extends AbstractHelper
 {
 	/**
 	 * 
-	 * @var \MaglBlog\Repository\BlogPost
+	 * @var BlogPostRepository
 	 */
 	private $blogPostRepo;
 	
-	public function __construct(\MaglBlog\Repository\BlogPost $blogPostRepository)
+	public function __construct(BlogPostRepository $blogPostRepository)
 	{
 		$this->blogPostRepo = $blogPostRepository;
 	}
