@@ -6,6 +6,6 @@ before_script:
   - composer install --dev --no-interaction
   
 script:
-  - phpunit -c tests --coverage-clover=coverage.clover
+  - phpunit -c tests
   - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+  - php ocular.phar code-coverage:upload --format=php-clover tests/log/coverage.xml
