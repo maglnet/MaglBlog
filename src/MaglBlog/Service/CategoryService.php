@@ -7,7 +7,6 @@
 
 namespace MaglBlog\Service;
 
-use DoctrineORMModule\Options\EntityManager;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -29,15 +28,6 @@ class CategoryService implements FactoryInterface
 	{
 		$this->categoryRepo = $serviceLocator->get('MaglBlog\CategoryRepository');
 		return $this;
-	}
-
-	/**
-	 * 
-	 * @return EntityManager
-	 */
-	private function getEntityManager()
-	{
-		return $this->em;
 	}
 
 	public function getListForWidget()

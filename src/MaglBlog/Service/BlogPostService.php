@@ -7,7 +7,8 @@
 
 namespace MaglBlog\Service;
 
-use DoctrineORMModule\Options\EntityManager;
+use Doctrine\Common\Collections\Collection;
+use MaglBlog\Repository\BlogPostRepository;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Model\ViewModel;
@@ -22,7 +23,7 @@ class BlogPostService implements FactoryInterface
 
 	/**
 	 *
-	 * @var \MaglBlog\Repository\BlogPostRepository
+	 * @var BlogPostRepository
 	 */
 	private $blogPostRepo;
 
@@ -32,24 +33,15 @@ class BlogPostService implements FactoryInterface
 		return $this;
 	}
 
-	/**
-	 * 
-	 * @return EntityManager
-	 */
-	private function getEntityManager()
-	{
-		return $this->em;
-	}
-
 	public function getRecent()
 	{
 		$recentBlogPosts = $this->blogPostRepo->findRecent();
 		return $recentBlogPosts;
 	}
-	
+
 	/**
 	 * 
-	 * @param array|\Doctrine\Common\Collections\Collection $blogPosts
+	 * @param array|Collection $blogPosts
 	 * @return ViewModel
 	 */
 	public function getListView($blogPosts)
