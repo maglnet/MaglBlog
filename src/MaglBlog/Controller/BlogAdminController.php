@@ -85,8 +85,8 @@ class BlogAdminController extends AbstractActionController implements FactoryInt
 				$tagCollection = $this->sm->get('MaglBlog\TagService')->getTagCollectionFromString($tagsString);
 				$blogPost->setTags($tagCollection);
 
-				$res = $this->getObjectManager()->persist($blogPost);
-				$res = $this->getObjectManager()->flush();
+				$this->getObjectManager()->persist($blogPost);
+				$this->getObjectManager()->flush();
 
 				// Redirect to list
 				return $this->redirect()->toRoute('zfcadmin/maglblog');
