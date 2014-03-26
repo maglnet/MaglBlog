@@ -3,8 +3,10 @@
 namespace MaglBlogTest;
 
 use MaglBlog\Module;
+use MaglBlogTest\Bootstrap;
 use PHPUnit_Framework_TestCase;
-use Zend\View\HelperPluginManager;
+use Zend\Mvc\View\Http\ViewManager;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * Description of ModuleTest
@@ -19,17 +21,45 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 	 * @var Module
 	 */
 	private $instance;
+	
+	/**
+	 *
+	 * @var ServiceManager
+	 */
+	private $sm;
 
+	/**
+	 *
+	 * @var ViewManager
+	 */
+	private $viewHelper;
+	
 	public function setUp()
 	{
 		$this->instance = new Module();
+		$this->sm = Bootstrap::getServiceManager();
+		$this->viewHelper = $this->sm->get('ViewHelperManager');
 	}
-
+	
 	public function testInstance()
 	{
 		$this->assertInstanceOf('MaglBlog\Module', $this->instance);
 	}
 
+	public function testGetConfig()
+	{
+		$config = $this->instance->getConfig();
+		
+		$this->assertTrue(is_array($config));
+	}
+	
+	public function testGetAutoloaderConfig()
+	{
+		$config = $this->instance->getAutoloaderConfig();
+
+		$this->assertTrue(array_key_exists('MaglBlog', $config['Zend\Loader\StandardAutoloader']['namespaces']));
+	}
+	
 	public function testGetViewHelperConfig()
 	{
 		$config = $this->instance->getViewHelperConfig();
@@ -40,17 +70,46 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 		
 		$this->assertTrue(array_key_exists('BlogUrlToPost', $config['factories']));
 	}
-
-	public function testGetViewHelper()
+	
+	public function testGetModuleDependencies()
 	{
-		$serviceManager = Bootstrap::getServiceManager();
+		$config = $this->instance->getModuleDependencies();
 
-		/* @var $view HelperPluginManager */
-		$view = $serviceManager->get('ViewHelperManager');
+		$this->assertTrue(is_array($config));
+		
+		$this->assertEquals(2, count($config));
+		
+		$this->assertTrue(in_array('DoctrineModule', $config));
+		$this->assertTrue(in_array('DoctrineORMModule', $config));
+		
+	}
 
-		$blogWidgetCategory = $view->get('BlogWidgetCategories');
-		$this->assertInstanceOf('Zend\View\Helper\HelperInterface', $blogWidgetCategory);
-		$this->assertInstanceOf('MaglBlog\View\Helper\BlogWidgetCategories', $blogWidgetCategory);
+	public function testGetViewHelperWidgetCategories()
+	{
+		$widget = $this->viewHelper->get('BlogWidgetCategories');
+		$this->assertInstanceOf('Zend\View\Helper\HelperInterface', $widget);
+		$this->assertInstanceOf('MaglBlog\View\Helper\BlogWidgetCategories', $widget);
+	}
+
+	public function testGetViewHelperWidgetTagCloud()
+	{
+		$widget = $this->viewHelper->get('BlogWidgetTagCloud');
+		$this->assertInstanceOf('Zend\View\Helper\HelperInterface', $widget);
+		$this->assertInstanceOf('MaglBlog\View\Helper\BlogWidgetTagCloud', $widget);
+	}
+
+	public function testGetViewHelperWidgetRecentPosts()
+	{
+		$widget = $this->viewHelper->get('BlogWidgetRecentPosts');
+		$this->assertInstanceOf('Zend\View\Helper\HelperInterface', $widget);
+		$this->assertInstanceOf('MaglBlog\View\Helper\BlogWidgetRecentPosts', $widget);
+	}
+	
+	public function testGetViewHelperBlogUrlToPost()
+	{
+		$widget = $this->viewHelper->get('BlogUrlToPost');
+		$this->assertInstanceOf('Zend\View\Helper\HelperInterface', $widget);
+		$this->assertInstanceOf('MaglBlog\View\Helper\BlogUrlToPost', $widget);
 	}
 
 }
