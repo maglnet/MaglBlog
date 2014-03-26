@@ -7,8 +7,8 @@
 
 namespace MaglBlog\Controller;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
-use DoctrineORMModule\Options\EntityManager;
 use Exception;
 use MaglBlog\Entity\BlogPost;
 use MaglBlog\Entity\Category;
@@ -30,9 +30,9 @@ class BlogAdminController extends AbstractActionController implements FactoryInt
 
 	/**
 	 *
-	 * @var EntityManager
+	 * @var ObjectManager
 	 */
-	private $em;
+	private $objectManager;
 
 	/**
 	 *
@@ -42,7 +42,7 @@ class BlogAdminController extends AbstractActionController implements FactoryInt
 
 	public function indexAction()
 	{
-		$blogPostRepo = $this->getEntityManager()->getRepository('\MaglBlog\Entity\BlogPost');
+		$blogPostRepo = $this->getObjectManager()->getRepository('\MaglBlog\Entity\BlogPost');
 		$blogPosts = $blogPostRepo->findBy(array(), array('createDate' => 'DESC'));
 
 		return new ViewModel(array(
@@ -57,14 +57,14 @@ class BlogAdminController extends AbstractActionController implements FactoryInt
 			$blogPost = new BlogPost();
 		} else {
 			try {
-				$blogPost = $this->getEntityManager()->getRepository('\MaglBlog\Entity\BlogPost')->findOneBy(array('id' => $this->params('id')));
+				$blogPost = $this->getObjectManager()->getRepository('\MaglBlog\Entity\BlogPost')->findOneBy(array('id' => $this->params('id')));
 			} catch (Exception $ex) {
 				return $this->redirect()->toRoute('zfcadmin/maglblog');
 			}
 		}
 
-		$form = new BlogPostForm($this->getEntityManager());
-		$form->setHydrator(new DoctrineObject($this->getEntityManager(), get_class($blogPost)));
+		$form = new BlogPostForm($this->getObjectManager());
+		$form->setHydrator(new DoctrineObject($this->getObjectManager(), get_class($blogPost)));
 		$form->bind($blogPost);
 		$form->get('submit')->setAttribute('value', 'Edit');
 
@@ -85,8 +85,8 @@ class BlogAdminController extends AbstractActionController implements FactoryInt
 				$tagCollection = $this->sm->get('MaglBlog\TagService')->getTagCollectionFromString($tagsString);
 				$blogPost->setTags($tagCollection);
 
-				$res = $this->getEntityManager()->persist($blogPost);
-				$res = $this->getEntityManager()->flush();
+				$res = $this->getObjectManager()->persist($blogPost);
+				$res = $this->getObjectManager()->flush();
 
 				// Redirect to list
 				return $this->redirect()->toRoute('zfcadmin/maglblog');
@@ -106,11 +106,11 @@ class BlogAdminController extends AbstractActionController implements FactoryInt
 		if (!$id) {
 			$category = new Category();
 		} else {
-			$category = $this->getEntityManager()->getRepository('\MaglBlog\Entity\Category')->findOneBy(array('id' => $this->params('id')));
+			$category = $this->getObjectManager()->getRepository('\MaglBlog\Entity\Category')->findOneBy(array('id' => $this->params('id')));
 		}
 
-		$form = new CategoryForm($this->getEntityManager());
-		$form->setHydrator(new DoctrineObject($this->getEntityManager(), get_class($category)));
+		$form = new CategoryForm($this->getObjectManager());
+		$form->setHydrator(new DoctrineObject($this->getObjectManager(), get_class($category)));
 		$form->bind($category);
 
 		$request = $this->getRequest();
@@ -119,8 +119,8 @@ class BlogAdminController extends AbstractActionController implements FactoryInt
 			$form->setData($request->getPost());
 
 			if ($form->isValid()) {
-				$this->getEntityManager()->persist($category);
-				$this->getEntityManager()->flush();
+				$this->getObjectManager()->persist($category);
+				$this->getObjectManager()->flush();
 
 				// Redirect to list
 				return $this->redirect()->toRoute('zfcadmin/maglblog');
@@ -144,7 +144,7 @@ class BlogAdminController extends AbstractActionController implements FactoryInt
 
 	public function createService(ServiceLocatorInterface $serviceLocator)
 	{
-		$this->em = $serviceLocator->getServiceLocator()
+		$this->objectManager = $serviceLocator->getServiceLocator()
 			->get('Doctrine\ORM\EntityManager');
 		$this->sm = $serviceLocator->getServiceLocator();
 		return $this;
@@ -152,10 +152,10 @@ class BlogAdminController extends AbstractActionController implements FactoryInt
 
 	/**
 	 * 
-	 * @return EntityManager
+	 * @return ObjectManager
 	 */
-	private function getEntityManager()
+	private function getObjectManager()
 	{
-		return $this->em;
+		return $this->objectManager;
 	}
 }
