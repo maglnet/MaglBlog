@@ -10,6 +10,7 @@ namespace MaglBlog\Service;
 use DoctrineORMModule\Options\EntityManager;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\View\Model\ViewModel;
 
 /**
  * Description of Category
@@ -21,7 +22,7 @@ class BlogPostService implements FactoryInterface
 
 	/**
 	 *
-	 * @var \MaglBlog\Repository\BlogPost
+	 * @var \MaglBlog\Repository\BlogPostRepository
 	 */
 	private $blogPostRepo;
 
@@ -44,5 +45,22 @@ class BlogPostService implements FactoryInterface
 	{
 		$recentBlogPosts = $this->blogPostRepo->findRecent();
 		return $recentBlogPosts;
+	}
+	
+	/**
+	 * 
+	 * @param array|\Doctrine\Common\Collections\Collection $blogPosts
+	 * @return ViewModel
+	 */
+	public function getListView($blogPosts)
+	{
+		$view = new ViewModel();
+		$view->setTemplate('magl-blog/blog/list');
+		foreach ($blogPosts as $post) {
+			$blogEntryView = new ViewModel(array('post' => $post));
+			$blogEntryView->setTemplate('magl-blog/blog/list-entry');
+			$view->addChild($blogEntryView, 'blogEntries', true);
+		}
+		return $view;
 	}
 }

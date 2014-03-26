@@ -27,19 +27,19 @@ class BlogController extends AbstractActionController implements FactoryInterfac
 	 * @var EntityManager
 	 */
 	private $em;
+	
+	/**
+	 *
+	 * @var \Zend\ServiceManager\ServiceManager
+	 */
+	private $sm;
 
 	public function listAction()
 	{		
 		$blogPostRepo = $this->getEntityManager()->getRepository('\MaglBlog\Entity\BlogPost');
 		$blogPosts = $blogPostRepo->findBy(array(), array('createDate' => 'DESC'));
 
-		$view = new ViewModel();
-		foreach ($blogPosts as $post) {
-			$blogEntryView = new ViewModel(array('post' => $post));
-			$blogEntryView->setTemplate('magl-blog/blog/list-entry');
-			$view->addChild($blogEntryView, 'blogEntries', true);
-		}
-		return $view;
+		return $this->sm->get('MaglBlog\BlogPostService')->getListView($blogPosts);
 	}
 	
 	public function categoryAction()
@@ -52,14 +52,7 @@ class BlogController extends AbstractActionController implements FactoryInterfac
 		
 		$blogPosts = $category->getBlogPosts();
 
-		$view = new ViewModel();
-		$view->setTemplate('magl-blog/blog/list.phtml');
-		foreach ($blogPosts as $post) {
-			$blogEntryView = new ViewModel(array('post' => $post));
-			$blogEntryView->setTemplate('magl-blog/blog/list-entry');
-			$view->addChild($blogEntryView, 'blogEntries', true);
-		}
-		return $view;
+		return $this->sm->get('MaglBlog\BlogPostService')->getListView($blogPosts);
 	}
 
 	public function tagAction()
@@ -72,14 +65,7 @@ class BlogController extends AbstractActionController implements FactoryInterfac
 		
 		$blogPosts = $tag->getBlogPosts();
 
-		$view = new ViewModel();
-		$view->setTemplate('magl-blog/blog/list.phtml');
-		foreach ($blogPosts as $post) {
-			$blogEntryView = new ViewModel(array('post' => $post));
-			$blogEntryView->setTemplate('magl-blog/blog/list-entry');
-			$view->addChild($blogEntryView, 'blogEntries', true);
-		}
-		return $view;
+		return $this->sm->get('MaglBlog\BlogPostService')->getListView($blogPosts);
 	}
 
 	public function postAction()
@@ -107,8 +93,8 @@ class BlogController extends AbstractActionController implements FactoryInterfac
 
 	public function createService(ServiceLocatorInterface $serviceLocator)
 	{
-		$this->em = $serviceLocator->getServiceLocator()
-				->get('Doctrine\ORM\EntityManager');
+		$this->sm = $serviceLocator->getServiceLocator();
+		$this->em = $this->sm->get('Doctrine\ORM\EntityManager');
 		return $this;
 	}
 
