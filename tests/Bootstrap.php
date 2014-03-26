@@ -40,7 +40,7 @@ class Bootstrap
 				'MaglBlog',
 			)
 		);
-
+		
 		$app = Application::init($config);
 		static::$serviceManager = $app->getServiceManager();
 	}

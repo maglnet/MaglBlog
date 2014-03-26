@@ -7,7 +7,6 @@
 
 namespace MaglBlog\Controller;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use DoctrineORMModule\Options\EntityManager;
 use Exception;
@@ -153,7 +152,7 @@ class BlogAdminController extends AbstractActionController implements FactoryInt
 
 	/**
 	 * 
-	 * @return ObjectManager
+	 * @return EntityManager
 	 */
 	private function getEntityManager()
 	{

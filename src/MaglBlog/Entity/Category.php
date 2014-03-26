@@ -7,7 +7,9 @@
 
 namespace MaglBlog\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  * @ORM\Entity(repositoryClass="MaglBlog\Repository\CategoryRepository")
  * @ORM\Table(name="maglblog_category")
@@ -28,12 +30,17 @@ class Category
 	 * 
 	 */
 	protected $name;
-	
+
 	/**
 	 * @ORM\OneToMany(targetEntity="BlogPost", mappedBy="category")
 	 * @ORM\OrderBy({"createDate" = "DESC"})
 	 */
 	protected $blogPosts;
+
+	public function __construct()
+	{
+		$this->blogPosts = new ArrayCollection();
+	}
 
 	public function getId()
 	{
@@ -54,7 +61,7 @@ class Category
 	{
 		$this->name = $name;
 	}
-	
+
 	public function getBlogPosts()
 	{
 		return $this->blogPosts;
@@ -64,6 +71,4 @@ class Category
 	{
 		$this->blogPosts = $blogPosts;
 	}
-
-
 }

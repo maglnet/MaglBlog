@@ -4,8 +4,10 @@
  * @author Matthias Glaub <magl@magl.net>
  * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  */
+
 namespace MaglBlog\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -17,31 +19,33 @@ use Doctrine\ORM\Mapping as ORM;
 class Tag
 {
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
-     */
-    protected $id;
-
-    /**
-     * @ORM\Column(type="string") 
-     */
-    protected $name;
-
-    /**
-     * @ORM\Column(type="string") 
-     */
-    protected $url_part;
+	/**
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 * @ORM\Column(type="integer")
+	 */
+	protected $id;
 
 	/**
-     * @ORM\ManyToMany(targetEntity="BlogPost", mappedBy="tags")
-	 * @ORM\OrderBy({"createDate" = "DESC"})
-     */
-    private $blogPosts;
+	 * @ORM\Column(type="string") 
+	 */
+	protected $name;
 
-    //###############
-    protected $inputFilter;
+	/**
+	 * @ORM\Column(type="string") 
+	 */
+	protected $url_part;
+
+	/**
+	 * @ORM\ManyToMany(targetEntity="BlogPost", mappedBy="tags")
+	 * @ORM\OrderBy({"createDate" = "DESC"})
+	 */
+	private $blogPosts;
+
+	public function __construct()
+	{
+		$this->blogPosts = new ArrayCollection();
+	}
 
 	public function getId()
 	{
@@ -58,11 +62,14 @@ class Tag
 		$this->id = $id;
 	}
 
+	/**
+	 * @param string $name
+	 */
 	public function setName($name)
 	{
 		$this->name = $name;
 	}
-	
+
 	public function getUrlPart()
 	{
 		return $this->url_part;
@@ -73,41 +80,41 @@ class Tag
 		$this->url_part = $urlPart;
 	}
 
-		
 	/**
-     * @param Collection $blogPosts
-     */
-    public function addBlogPosts(Collection $blogPosts)
-    {
-        foreach ($blogPosts as $blogPost) {
-            $this->addBlogPost($blogPost);
-        }
-    }
+	 * @param Collection $blogPosts
+	 */
+	public function addBlogPosts(Collection $blogPosts)
+	{
+		foreach ($blogPosts as $blogPost) {
+			$this->addBlogPost($blogPost);
+		}
+	}
+
 	/**
-     * @param Collection $tags
-     */
-    public function addBlogPost(BlogPost $blogPost)
+	 * @param BlogPost $blogPost
+	 */
+	public function addBlogPost(BlogPost $blogPost)
 	{
 		$blogPost->setTag($this);
 		$this->blogPosts->add($blogPost);
 	}
 
 	/**
-     * @param Collection $tags
-     */
-    public function removeBlogPosts(Collection $blogPosts)
-    {
-        foreach ($blogPosts as $blogPost) {
-            $blogPost->removeTag($this);
-            $this->blogPosts->removeElement($blogPost);
-        }
-    }
+	 * @param Collection $blogPosts
+	 */
+	public function removeBlogPosts(Collection $blogPosts)
+	{
+		foreach ($blogPosts as $blogPost) {
+			$blogPost->removeTag($this);
+			$this->blogPosts->removeElement($blogPost);
+		}
+	}
 
-    /**
-     * @return Collection
-     */
-    public function getBlogPosts()
-    {
-        return $this->blogPosts;
-    }
+	/**
+	 * @return Collection
+	 */
+	public function getBlogPosts()
+	{
+		return $this->blogPosts;
+	}
 }

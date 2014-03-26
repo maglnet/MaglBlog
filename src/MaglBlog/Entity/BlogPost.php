@@ -20,6 +20,7 @@ class BlogPost
 {
 
 	/**
+	 * 
 	 * @ORM\Id
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 * @ORM\Column(type="integer")
@@ -27,36 +28,43 @@ class BlogPost
 	protected $id;
 
 	/**
+	 * 
 	 * @ORM\Column(type="string") 
 	 */
 	protected $title;
 
 	/**
+	 * 
 	 * @ORM\Column(type="text", name="teaser_text")
-	 *  */
+	 */
 	protected $teaserText;
 
 	/**
+	 * 
 	 *  @ORM\Column(type="text")
-	 *  */
+	 */
 	protected $text;
 
 	/**
+	 * 
 	 *  @ORM\Column(type="datetime", name="create_date")
 	 */
 	protected $createDate;
 
 	/**
+	 * 
 	 *  @ORM\Column(type="datetime", name="update_date")
-	 *  */
+	 */
 	protected $updateDate;
 
 	/**
+	 * 
 	 * @ORM\Column(type="integer", name="author_id")
-	 *  */
+	 */
 	protected $authorId;
 
 	/**
+	 * 
 	 * @ORM\ManyToMany(targetEntity="Tag", cascade={"persist"})
 	 * @ORM\JoinTable(name="maglblog_blogpost_tag", 
 	 *              joinColumns={@ORM\JoinColumn(name="blogpost_id", referencedColumnName = "id")}, 
@@ -65,6 +73,7 @@ class BlogPost
 	protected $tags;
 
 	/**
+	 * 
 	 * @ORM\ManyToOne(targetEntity="Category", fetch="EAGER")
 	 */
 	protected $category;
@@ -145,6 +154,7 @@ class BlogPost
 	}
 
 	/**
+	 * 
 	 * @param Collection $tags
 	 */
 	public function addTags(Collection $tags)
@@ -156,6 +166,7 @@ class BlogPost
 	}
 
 	/**
+	 * 
 	 * @param Collection $tags
 	 */
 	public function setTags(Collection $tags)
@@ -164,7 +175,8 @@ class BlogPost
 	}
 
 	/**
-	 * @param Tag $tags
+	 * 
+	 * @param Tag $tag
 	 */
 	public function addTag(Tag $tag)
 	{
@@ -173,6 +185,7 @@ class BlogPost
 	}
 
 	/**
+	 * 
 	 * @param Collection $tags
 	 */
 	public function removeTags(Collection $tags)
@@ -184,6 +197,7 @@ class BlogPost
 	}
 
 	/**
+	 * 
 	 * @return Collection
 	 */
 	public function getTags()
@@ -200,6 +214,10 @@ class BlogPost
 		return $this->category;
 	}
 
+	/**
+	 * 
+	 * @param Category $category
+	 */
 	public function setCategory(Category $category = null)
 	{
 		$this->category = $category;

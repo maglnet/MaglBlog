@@ -67,6 +67,9 @@ class TagService implements FactoryInterface
 		return trim($tagString, $this->tagSeparator . ' ');
 	}
 
+	/**
+	 * @param string $tagName
+	 */
 	public function urlifyTagName($tagName)
 	{
 		$urlPart = preg_replace('/[^a-z0-9]/i', '-', $tagName);
