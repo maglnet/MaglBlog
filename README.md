@@ -15,3 +15,4 @@ where i can learn and test to create ZF2 modules and other intresting things.
 [![Latest Stable Version](https://poser.pugx.org/maglnet/magl-blog/v/stable.png)](https://packagist.org/packages/maglnet/magl-blog)
 [![Latest Unstable Version](https://poser.pugx.org/maglnet/magl-blog/v/unstable.png)](https://packagist.org/packages/maglnet/magl-blog)
 [![License](https://poser.pugx.org/maglnet/magl-blog/license.png)](https://packagist.org/packages/maglnet/magl-blog)
+[![Dependency Status](https://www.versioneye.com/user/projects/533223cc7bae4bb0ec0002a1/badge.png)](https://www.versioneye.com/user/projects/533223cc7bae4bb0ec0002a1)
