@@ -26,12 +26,15 @@ class Category
 	protected $id;
 
 	/**
-	 * @ORM\Column(type="text")
 	 * 
+	 * @ORM\Column(type="text")
 	 */
 	protected $name;
 
 	/**
+	 * 
+	 * @var \Doctrine\Common\Collections\Collection
+	 * 
 	 * @ORM\OneToMany(targetEntity="BlogPost", mappedBy="category")
 	 * @ORM\OrderBy({"createDate" = "DESC"})
 	 */
@@ -42,32 +45,56 @@ class Category
 		$this->blogPosts = new ArrayCollection();
 	}
 
+	/**
+	 * 
+	 * @return int
+	 */
 	public function getId()
 	{
 		return $this->id;
 	}
 
+	/**
+	 * 
+	 * @return string
+	 */
 	public function getName()
 	{
 		return $this->name;
 	}
 
+	/**
+	 * 
+	 * @param int $id
+	 */
 	public function setId($id)
 	{
 		$this->id = $id;
 	}
 
+	/**
+	 * 
+	 * @param string $name
+	 */
 	public function setName($name)
 	{
 		$this->name = $name;
 	}
 
+	/**
+	 * 
+	 * @return \Doctrine\Common\Collections\Collection
+	 */
 	public function getBlogPosts()
 	{
 		return $this->blogPosts;
 	}
 
-	public function setBlogPosts($blogPosts)
+	/**
+	 * 
+	 * @param \Doctrine\Common\Collections\Collection $blogPosts
+	 */
+	public function setBlogPosts(\Doctrine\Common\Collections\Collection $blogPosts)
 	{
 		$this->blogPosts = $blogPosts;
 	}

@@ -95,8 +95,14 @@ class Tag
 	 */
 	public function addBlogPost(BlogPost $blogPost)
 	{
-		$blogPost->setTag($this);
-		$this->blogPosts->add($blogPost);
+		if (!$this->blogPosts->contains($blogPost)) {
+			$this->blogPosts->add($blogPost);
+		}
+		
+		if(!$blogPost->getTags()->contains($this)){
+			$blogPost->addTag($this);
+		}
+		
 	}
 
 	/**
@@ -108,6 +114,15 @@ class Tag
 			$blogPost->removeTag($this);
 			$this->blogPosts->removeElement($blogPost);
 		}
+	}
+
+	/**
+	 * @param BlogPost $blogPosts
+	 */
+	public function removeBlogPost(BlogPost $blogPost)
+	{
+		$blogPost->removeTag($this);
+		$this->blogPosts->removeElement($blogPost);
 	}
 
 	/**

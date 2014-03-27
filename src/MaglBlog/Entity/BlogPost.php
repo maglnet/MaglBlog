@@ -65,6 +65,7 @@ class BlogPost
 
 	/**
 	 * 
+	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Tag", cascade={"persist"})
 	 * @ORM\JoinTable(name="maglblog_blogpost_tag", 
 	 *              joinColumns={@ORM\JoinColumn(name="blogpost_id", referencedColumnName = "id")}, 
@@ -160,8 +161,7 @@ class BlogPost
 	public function addTags(Collection $tags)
 	{
 		foreach ($tags as $tag) {
-			$tag->setBlogPost($this);
-			$this->tags->add($tag);
+			$this->addTag($tag);
 		}
 	}
 
@@ -180,8 +180,14 @@ class BlogPost
 	 */
 	public function addTag(Tag $tag)
 	{
-		$tag->setBlogPost($this);
-		$this->tags->add($tag);
+		if(!$this->tags->contains($this)){
+			$this->tags->add($tag);
+		}
+		
+		if(!$tag->getBlogPosts()->contains($tag)){
+			$tag->addBlogPost($this);
+		}
+		
 	}
 
 	/**
@@ -191,9 +197,17 @@ class BlogPost
 	public function removeTags(Collection $tags)
 	{
 		foreach ($tags as $tag) {
-			$tag->setBlogPost(null);
-			$this->tags->removeElement($tag);
+			$tag->removeBlogPost($this);
+			$this->removeTag($tag);
 		}
+	}
+	/**
+	 * 
+	 * @param Tag $tag
+	 */
+	public function removeTag(Tag $tag)
+	{
+		$this->tags->removeElement($tag);
 	}
 
 	/**
@@ -225,9 +239,8 @@ class BlogPost
 
 	public function getTitleForUrl()
 	{
-		$title = str_replace(array(' ', ','), '-', $this->getTitle());
-		$title = preg_replace('/-+/', '-', $title);
-		$title = trim($title, ' -');
-		return urlencode($title);
+		$urlPart = preg_replace('/[^a-z0-9]/i', '-', $this->getTitle());
+		$urlPart = preg_replace('/-{2,}/', '-', $urlPart);
+		return strtolower(trim($urlPart, '- '));
 	}
 }
