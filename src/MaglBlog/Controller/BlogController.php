@@ -34,17 +34,33 @@ class BlogController extends AbstractActionController implements FactoryInterfac
 	 */
 	private $sm;
 
+	/**
+	 *
+	 * @var \MaglBlog\Repository\CategoryRepository
+	 */
+	private $catRepo;
+	
+	/**
+	 *
+	 * @var \MaglBlog\Repository\BlogPostRepository
+	 */
+	private $blogPostRepo;
+
+	/**
+	 *
+	 * @var \MaglBlog\Repository\TagRepository
+	 */
+	private $tagRepo;
+
 	public function listAction()
 	{		
-		$blogPostRepo = $this->getEntityManager()->getRepository('\MaglBlog\Entity\BlogPost');
-		$blogPosts = $blogPostRepo->findBy(array(), array('createDate' => 'DESC'));
-
+		$blogPosts = $this->getBlogPostRepository()->findBy(array(), array('createDate' => 'DESC'));
 		return $this->sm->get('MaglBlog\BlogPostService')->getListView($blogPosts);
 	}
 	
 	public function categoryAction()
 	{
-		$category = $this->getEntityManager()->find('\MaglBlog\Entity\Category', (int) $this->params('id'));
+		$category = $this->getCategoryRepository()->find((int) $this->params('id'));
 		if(!$category){
 			$this->getResponse()->setStatusCode(404);
 			return;
@@ -57,7 +73,7 @@ class BlogController extends AbstractActionController implements FactoryInterfac
 
 	public function tagAction()
 	{
-		$tag = $this->getEntityManager()->getRepository('\MaglBlog\Entity\Tag')->findOneByUrlPart($this->params('tagUrlPart'));
+		$tag = $this->getTagRepository()->findOneByUrlPart($this->params('tagUrlPart'));
 		if(!$tag){
 			$this->getResponse()->setStatusCode(404);
 			return;
@@ -71,8 +87,7 @@ class BlogController extends AbstractActionController implements FactoryInterfac
 	public function postAction()
 	{
 		try {
-			$blogPostRepo = $this->getEntityManager()->getRepository('\MaglBlog\Entity\BlogPost');
-			$blogPost = $blogPostRepo->findOneBy(array('id' => $this->params('id')));
+			$blogPost = $this->getBlogPostRepository()->find((int) $this->params('id'));
 
 			if (!$this->params('title') || $this->params('title') != $blogPost->getTitleForUrl()) {
 				$this->redirect()
@@ -107,4 +122,36 @@ class BlogController extends AbstractActionController implements FactoryInterfac
 		return $this->em;
 	}
 
+	/**
+	 * 
+	 * @return \MaglBlog\Repository\CategoryRepository
+	 */
+	private function getCategoryRepository(){
+		if(null == $this->catRepo){
+			$this->catRepo = $this->sm->get('MaglBlog\CategoryRepository');
+		}
+		return $this->catRepo;
+	}
+	
+	/**
+	 * 
+	 * @return \MaglBlog\Repository\BlogPostRepository
+	 */
+	private function getBlogPostRepository(){
+		if(null == $this->blogPostRepo){
+			$this->blogPostRepo = $this->sm->get('MaglBlog\BlogPostRepository');
+		}
+		return $this->blogPostRepo;
+	}
+	
+	/**
+	 * 
+	 * @return \MaglBlog\Repository\TagRepository
+	 */
+	private function getTagRepository(){
+		if(null == $this->tagRepo){
+			$this->tagRepo = $this->sm->get('MaglBlog\TagRepository');
+		}
+		return $this->tagRepo;
+	}
 }

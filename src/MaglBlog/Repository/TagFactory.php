@@ -20,8 +20,9 @@ class TagFactory implements FactoryInterface
 
 	public function createService(ServiceLocatorInterface $serviceLocator)
 	{
-		$em = $serviceLocator->get('Doctrine\ORM\EntityManager');
-		$tagRepo = $em->getRepository('\MaglBlog\Entity\Tag');
+		$em = $serviceLocator->get('\Doctrine\ORM\EntityManager');
+		$meta = $em->getClassMetadata('\MaglBlog\Entity\Tag');
+		$tagRepo = new TagRepository($em, $meta);
 		return $tagRepo;
 	}
 }

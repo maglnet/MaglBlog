@@ -19,8 +19,9 @@ class BlogPostFactory implements FactoryInterface
 {
 	public function createService(ServiceLocatorInterface $serviceLocator)
 	{
-		$em = $serviceLocator->get('Doctrine\ORM\EntityManager');
-		$blogPostRepo = $em->getRepository('\MaglBlog\Entity\BlogPost');
+		$em = $serviceLocator->get('\Doctrine\ORM\EntityManager');
+		$meta = $em->getClassMetadata('\MaglBlog\Entity\BlogPost');
+		$blogPostRepo = new BlogPostRepository($em, $meta);
 		return $blogPostRepo;
 	}
 }

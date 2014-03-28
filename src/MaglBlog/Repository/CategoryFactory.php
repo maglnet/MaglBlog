@@ -20,8 +20,9 @@ class CategoryFactory implements FactoryInterface
 
 	public function createService(ServiceLocatorInterface $serviceLocator)
 	{
-		$em = $serviceLocator->get('Doctrine\ORM\EntityManager');
-		$categoryRepo = $em->getRepository('\MaglBlog\Entity\Category');
+		$em = $serviceLocator->get('\Doctrine\ORM\EntityManager');
+        $meta   = $em->getClassMetadata('\MaglBlog\Entity\Category');
+		$categoryRepo = new CategoryRepository($em, $meta);
 		return $categoryRepo;
 	}
 }
