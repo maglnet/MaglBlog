@@ -15,8 +15,10 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  *
  * @author matthias
  */
-class BaseFactory implements FactoryInterface
+abstract class BaseFactory implements FactoryInterface
 {
+	abstract public function createService(ServiceLocatorInterface $serviceLocator);
+	
 	public function createServiceForClass($class, ServiceLocatorInterface $serviceLocator)
 	{
 		$em = '\Doctrine\ORM\EntityManager';

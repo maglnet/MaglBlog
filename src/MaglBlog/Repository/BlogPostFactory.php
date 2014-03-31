@@ -15,7 +15,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  *
  * @author matthias
  */
-class BlogPostFactory extends BaseFactory implements FactoryInterface
+class BlogPostFactory extends BaseFactory
 {
 	public function createService(ServiceLocatorInterface $serviceLocator)
 	{

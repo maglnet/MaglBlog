@@ -15,7 +15,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  *
  * @author matthias
  */
-class CategoryFactory extends BaseFactory implements FactoryInterface
+class CategoryFactory extends BaseFactory
 {
 
 	public function createService(ServiceLocatorInterface $serviceLocator)
