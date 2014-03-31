@@ -15,14 +15,11 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  *
  * @author matthias
  */
-class TagFactory implements FactoryInterface
+class TagFactory extends BaseFactory implements FactoryInterface
 {
 
 	public function createService(ServiceLocatorInterface $serviceLocator)
 	{
-		$em = $serviceLocator->get('\Doctrine\ORM\EntityManager');
-		$meta = $em->getClassMetadata('\MaglBlog\Entity\Tag');
-		$tagRepo = new TagRepository($em, $meta);
-		return $tagRepo;
+		return $this->createServiceForClass('\MaglBlog\Entity\Tag', $serviceLocator);
 	}
 }

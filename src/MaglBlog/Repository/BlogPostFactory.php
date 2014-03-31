@@ -15,13 +15,10 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  *
  * @author matthias
  */
-class BlogPostFactory implements FactoryInterface
+class BlogPostFactory extends BaseFactory implements FactoryInterface
 {
 	public function createService(ServiceLocatorInterface $serviceLocator)
 	{
-		$em = $serviceLocator->get('\Doctrine\ORM\EntityManager');
-		$meta = $em->getClassMetadata('\MaglBlog\Entity\BlogPost');
-		$blogPostRepo = new BlogPostRepository($em, $meta);
-		return $blogPostRepo;
+		return $this->createServiceForClass('\MaglBlog\Entity\BlogPost', $serviceLocator);
 	}
 }
