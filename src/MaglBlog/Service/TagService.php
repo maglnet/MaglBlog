@@ -24,15 +24,14 @@ class TagService implements FactoryInterface
 
 	/**
 	 *
-	 * @var EntityRepository
+	 * @var \MaglBlog\Repository\TagRepository
 	 */
 	private $tagRepo;
 	private $tagSeparator = ',';
 
 	public function createService(ServiceLocatorInterface $serviceLocator)
 	{
-		$em = $serviceLocator->get('Doctrine\ORM\EntityManager');
-		$this->tagRepo = $em->getRepository('\MaglBlog\Entity\Tag');
+		$this->tagRepo = $serviceLocator->get('MaglBlog\TagRepository');
 		return $this;
 	}
 
@@ -62,7 +61,7 @@ class TagService implements FactoryInterface
 	{
 		$tagString = '';
 		foreach ($tagCollection as $tag) {
-			$tagString .= $tag->getName() . $this->tagSeparator . ' ';
+			$tagString .= trim($tag->getName()) . $this->tagSeparator . ' ';
 		}
 		return trim($tagString, $this->tagSeparator . ' ');
 	}

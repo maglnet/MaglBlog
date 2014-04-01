@@ -61,7 +61,7 @@ class Bootstrap
 	 */
 	public static function getServiceManager()
 	{
-		return static::$serviceManager;
+		return clone static::$serviceManager;
 	}
 
 	protected static function initAutoloader()

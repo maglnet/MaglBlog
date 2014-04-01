@@ -19,19 +19,24 @@ use PHPUnit_Framework_TestCase;
 class BlogPostServiceTest extends PHPUnit_Framework_TestCase
 {
 	
-	public function testGetRecent(){
-
-		$serviceManager = Bootstrap::getServiceManager();
-		
+	private $blogPostCollection;
+	
+	public function setUp()
+	{
 		$blogPost1 = new \MaglBlog\Entity\BlogPost();
 		$blogPost1->setTitle('MyTitle1');
 		$blogPost2 = new \MaglBlog\Entity\BlogPost();
 		$blogPost2->setTitle('MyTitle2');
 		
-		$blogPostsCollection = new \Doctrine\Common\Collections\ArrayCollection(array(
+		$this->blogPostCollection = new \Doctrine\Common\Collections\ArrayCollection(array(
 			$blogPost1,
 			$blogPost2,
 		));
+	}
+	
+	public function testGetRecent(){
+
+		$serviceManager = Bootstrap::getServiceManager();
 		
 		$blogPostRepoMock = $this->getMockBuilder('MaglBlog\Repository\BlogPostRepository')
 			->disableOriginalConstructor()
@@ -39,7 +44,7 @@ class BlogPostServiceTest extends PHPUnit_Framework_TestCase
 
 		$blogPostRepoMock->expects($this->once())
 			->method('findRecent')
-			->will($this->returnValue($blogPostsCollection));
+			->will($this->returnValue($this->blogPostCollection));
 		
 		$serviceManager->setAllowOverride(true);
 		$serviceManager->setService('MaglBlog\BlogPostRepository', $blogPostRepoMock);
@@ -48,7 +53,7 @@ class BlogPostServiceTest extends PHPUnit_Framework_TestCase
 		
 		$blogPosts = $blogPostService->getRecent();
 		
-		$this->assertSame($blogPosts, $blogPostsCollection);
+		$this->assertSame($blogPosts, $this->blogPostCollection);
 	}
 	
 	
@@ -57,18 +62,8 @@ class BlogPostServiceTest extends PHPUnit_Framework_TestCase
 		$serviceManager = Bootstrap::getServiceManager();
 		$blogPostService = $serviceManager->get('MaglBlog\BlogPostService');
 		
-		$blogPost1 = new \MaglBlog\Entity\BlogPost();
-		$blogPost1->setTitle('MyTitle1');
-		$blogPost2 = new \MaglBlog\Entity\BlogPost();
-		$blogPost2->setTitle('MyTitle2');
-		
-		$blogPosts = new \Doctrine\Common\Collections\ArrayCollection(array(
-			$blogPost1,
-			$blogPost2,
-		));
-		
 		/* @var $view \Zend\View\Model\ViewModel */
-		$view = $blogPostService->getListView($blogPosts);
+		$view = $blogPostService->getListView($this->blogPostCollection);
 		
 		// check parent
 		$this->assertInstanceOf('\Zend\View\Model\ViewModel', $view);
