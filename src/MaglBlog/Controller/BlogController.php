@@ -24,12 +24,6 @@ class BlogController extends AbstractActionController implements FactoryInterfac
 
 	/**
 	 *
-	 * @var EntityManager
-	 */
-	private $em;
-	
-	/**
-	 *
 	 * @var \Zend\ServiceManager\ServiceManager
 	 */
 	private $sm;
@@ -104,17 +98,7 @@ class BlogController extends AbstractActionController implements FactoryInterfac
 	public function createService(ServiceLocatorInterface $serviceLocator)
 	{
 		$this->sm = $serviceLocator->getServiceLocator();
-		$this->em = $this->sm->get('Doctrine\ORM\EntityManager');
 		return $this;
-	}
-
-	/**
-	 * 
-	 * @return EntityManager
-	 */
-	private function getEntityManager()
-	{
-		return $this->em;
 	}
 
 	/**
