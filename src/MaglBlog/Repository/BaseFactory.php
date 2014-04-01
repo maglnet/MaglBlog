@@ -29,7 +29,7 @@ abstract class BaseFactory implements FactoryInterface
 		$em = $serviceLocator->get($em);
 		$meta = $em->getClassMetadata($class);
 		$classname = $this->basenameWithDelimiter($class, '\\');
-		$classname = $classname.'Repository';
+		$classname = __NAMESPACE__ . '\\' . $classname.'Repository';
 		$repositoryClass = new $classname($em, $meta);
 		return $repositoryClass;
 	}
