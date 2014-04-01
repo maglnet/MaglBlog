@@ -15,14 +15,11 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  *
  * @author matthias
  */
-class CategoryFactory implements FactoryInterface
+class CategoryFactory extends BaseFactory
 {
 
 	public function createService(ServiceLocatorInterface $serviceLocator)
 	{
-		$em = $serviceLocator->get('\Doctrine\ORM\EntityManager');
-        $meta   = $em->getClassMetadata('\MaglBlog\Entity\Category');
-		$categoryRepo = new CategoryRepository($em, $meta);
-		return $categoryRepo;
+		return $this->createServiceForClass('\MaglBlog\Entity\Category', $serviceLocator);
 	}
 }

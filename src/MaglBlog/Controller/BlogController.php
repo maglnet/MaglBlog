@@ -58,29 +58,24 @@ class BlogController extends AbstractActionController implements FactoryInterfac
 		return $this->sm->get('MaglBlog\BlogPostService')->getListView($blogPosts);
 	}
 	
-	public function categoryAction()
+	public function categoryAction()	
 	{
-		$category = $this->getCategoryRepository()->find((int) $this->params('id'));
-		if(!$category){
-			$this->getResponse()->setStatusCode(404);
-			return;
-		}
-		
-		$blogPosts = $category->getBlogPosts();
-
-		return $this->sm->get('MaglBlog\BlogPostService')->getListView($blogPosts);
+		return $this->auxAction($this->getCategoryRepository()->find((int) $this->params('id')));
 	}
-
-	public function tagAction()
+ 
+	public function tagAction()	
 	{
-		$tag = $this->getTagRepository()->findOneByUrlPart($this->params('tagUrlPart'));
-		if(!$tag){
+		return $this->auxAction($this->getTagRepository()->findOneByUrlPart($this->params('tagUrlPart')));
+	}
+ 
+	protected function auxAction($content)
+	{
+		if(!$content){
 			$this->getResponse()->setStatusCode(404);
 			return;
 		}
-		
-		$blogPosts = $tag->getBlogPosts();
-
+	
+		$blogPosts = $content->getBlogPosts();
 		return $this->sm->get('MaglBlog\BlogPostService')->getListView($blogPosts);
 	}
 
