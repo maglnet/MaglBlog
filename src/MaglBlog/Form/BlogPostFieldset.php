@@ -129,7 +129,6 @@ class BlogPostFieldset extends Fieldset implements InputFilterProviderInterface
 				'class' => 'form-control',
 			),
 		));
-
 	}
 
 	public function getInputFilterSpecification()
@@ -214,6 +213,10 @@ class BlogPostFieldset extends Fieldset implements InputFilterProviderInterface
 				),
 			),
 			'category' => array(
+				'required' => false,
+				'allow_empty' => true,
+			),
+			'tags-holder' => array(
 				'required' => false,
 				'allow_empty' => true,
 			),
