@@ -57,6 +57,9 @@ class Tag
 		return $this->name;
 	}
 
+	/**
+	 * @param $id
+	 */
 	public function setId($id)
 	{
 		$this->id = $id;
@@ -69,12 +72,15 @@ class Tag
 	{
 		$this->name = $name;
 	}
-
+	
 	public function getUrlPart()
 	{
 		return $this->url_part;
 	}
 
+	/**
+	 * @param @urlPart
+	 */
 	public function setUrlPart($urlPart)
 	{
 		$this->url_part = $urlPart;
@@ -117,7 +123,7 @@ class Tag
 	}
 
 	/**
-	 * @param BlogPost $blogPosts
+	 * @param BlogPost $blogPost
 	 */
 	public function removeBlogPost(BlogPost $blogPost)
 	{

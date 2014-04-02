@@ -7,7 +7,6 @@
 
 namespace MaglBlog\Controller;
 
-use Doctrine\ORM\EntityManager;
 use Exception;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\ServiceManager\FactoryInterface;
