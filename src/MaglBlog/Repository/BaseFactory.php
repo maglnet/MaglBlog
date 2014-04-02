@@ -22,7 +22,7 @@ abstract class BaseFactory implements FactoryInterface
 	
 	/**
 	 * @param string $class Classname with Namespace
-	 * @param ServiceLocatorInterface $$serviceLocator A ServiceLocator
+	 * @param ServiceLocatorInterface $serviceLocator A ServiceLocator
 	 */
 	public function createServiceForClass($class, ServiceLocatorInterface $serviceLocator)
 	{
