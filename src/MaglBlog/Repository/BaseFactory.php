@@ -11,20 +11,30 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Description of BaseFactory
+ * BaseFactory acts as collection of reusable init methods
+ * for each of the concrete factory classes
  *
- * @author matthias
+ * @author Jens Kohl
  */
 abstract class BaseFactory implements FactoryInterface
 {
 	abstract public function createService(ServiceLocatorInterface $serviceLocator);
 	
+	/**
+	 * @param string $class Classname with Namespace
+	 * @param ServiceLocatorInterface $serviceLocator A ServiceLocator
+	 */
 	public function createServiceForClass($class, ServiceLocatorInterface $serviceLocator)
 	{
 		$em = '\Doctrine\ORM\EntityManager';
 		return $this->createServiceForClassAndEm($class, $em, $serviceLocator);
 	}
 	
+	/**
+	 * @param string $class Classname with Namespace
+	 * @param string $em An Entity Model
+	 * @param ServiceLocatorInterface $serviceLocator A ServiceLocator
+	 */
 	public function createServiceForClassAndEm($class, $em, ServiceLocatorInterface $serviceLocator) {
 		$em = $serviceLocator->get($em);
 		$meta = $em->getClassMetadata($class);
@@ -34,7 +44,12 @@ abstract class BaseFactory implements FactoryInterface
 		return $repositoryClass;
 	}
 	
-	protected function basenameWithDelimiter($string, $delimiter) {
+	/**
+	 * Returns trailing name component of a string with a given delimiter
+	 * @param string $string A string
+	 * @param string $delimiter A delimiter, by default the backslash as used in PHP namespaces
+	 */
+	protected function basenameWithDelimiter($string, $delimiter = '\\') {
 		$components = explode($delimiter, $string);
 		$size = count($components);
 		
