@@ -20,7 +20,13 @@ class TagRepository extends EntityRepository
 	public function findWithPostCount()
 	{
 		$em = $this->getEntityManager();
-		$query = $em->createQuery('SELECT t as tag, count(p.id) as postCount FROM MaglBlog\Entity\Tag t JOIN t.blogPosts p GROUP BY t.id');
+		$query = $em->createQuery(
+			'SELECT t as tag, count(p.id) as postCount'.
+			' FROM MaglBlog\Entity\Tag t'.
+			' JOIN t.blogPosts p'.
+			' GROUP BY t.id'.
+			' ORDER BY t.name'
+		);
 		$result = $query->getResult();
 		return $result;
 	}
