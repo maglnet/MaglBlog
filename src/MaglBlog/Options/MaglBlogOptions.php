@@ -39,7 +39,7 @@ class MaglBlogOptions extends AbstractOptions
          || !isset($tagCloud['tagDecorator']))
         {
             throw new InvalidArgumentException(sprintf(
-                'tag_cloud config must contain keys "cloudDecorator" and "cloudDecorator", "%s" given',
+                'tag_cloud config must contain keys "cloudDecorator" and "tagDecorator", "%s" given',
                 implode('", "', array_keys($tagCloud))
             ));
         }
