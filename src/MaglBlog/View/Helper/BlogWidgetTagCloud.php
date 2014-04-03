@@ -7,6 +7,7 @@
 
 namespace MaglBlog\View\Helper;
 
+use MaglBlog\Options\MaglBlogOptions;
 use MaglBlog\Repository\TagRepository;
 use Zend\Tag\Cloud;
 use Zend\View\Helper\AbstractHelper;
@@ -19,10 +20,17 @@ class BlogWidgetTagCloud extends AbstractHelper
 	 * @var TagRepository
 	 */
 	private $tagRepo;
+	
+	/**
+	 *
+	 * @var array
+	 */
+	private $tagCloudOptions;
 
-	public function __construct(TagRepository $tagRepository)
+	public function __construct(TagRepository $tagRepository, MaglBlogOptions $blogOptions)
 	{
 		$this->tagRepo = $tagRepository;
+		$this->tagCloudOptions = $blogOptions->getTagCloud();
 	}
 
 	public function __invoke()
@@ -39,8 +47,11 @@ class BlogWidgetTagCloud extends AbstractHelper
 				)
 			);
 		}
+		
 		$tagCloud = new Cloud(array(
-			'tags' => $tagList
+			'cloudDecorator' => $this->tagCloudOptions['cloudDecorator'],
+			'tagDecorator' => $this->tagCloudOptions['tagDecorator'],
+			'tags' => $tagList,
 		));
 
 		return $this->getView()->render('magl-blog/widget/tag-cloud.phtml', array('tagCloud' => $tagCloud));

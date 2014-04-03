@@ -5,6 +5,32 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  */
 return array(
+	'magl_blog' => array(
+		'tag_cloud' => array(
+			'cloudDecorator' => array(
+				'decorator' => 'htmlcloud',
+				'options'   => array(
+					//'separator' => "\n\n",
+					'htmlTags'  => array(
+						'div' => array(
+							'class' => 'maglblog-tag-cloud',
+						),
+					),
+				),
+			),
+			'tagDecorator' => array(
+				'decorator' => 'htmltag',
+				'options'   => array(
+					'minFontSize' => '10',
+					'maxFontSize' => '26',
+					//'classList' => array('tag1','tag2','tag3','tag4','tag5','tag6','tag7','tag8','tag9','tag10'),
+					'htmlTags'    => array(
+						'span' => array(),
+					),
+				),
+			),
+		)
+	),
 	'navigation' => array(
 		'default' => array(
 			'magl_blog' => array(
@@ -27,6 +53,7 @@ return array(
 	),
 	'service_manager' => array(
 		'factories' => array(
+			'MaglBlog\BlogOptions' => 'MaglBlog\Options\MaglBlogOptionsFactory',
 			'MaglBlog\TagService' => 'MaglBlog\Service\TagService',
 			'MaglBlog\CategoryService' => 'MaglBlog\Service\CategoryService',
 			'MaglBlog\BlogPostService' => 'MaglBlog\Service\BlogPostService',
