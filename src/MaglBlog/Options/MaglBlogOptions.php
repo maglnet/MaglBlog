@@ -21,6 +21,11 @@ class MaglBlogOptions extends AbstractOptions
      * @var array
      */
     protected $tagCloud;
+	
+    /**
+     * @var int
+     */
+    protected $recentPostsNum = 5;
 
 	public function getTagCloud()
 	{
@@ -47,7 +52,19 @@ class MaglBlogOptions extends AbstractOptions
 		$this->tagCloud = $tagCloud;
         return $this;
 	}
+	
+	public function getRecentPostsNum()
+	{
+		return $this->recentPostsNum;
+	}
 
+	public function setRecentPostsNum($recentPostsNum)
+	{
+		$this->recentPostsNum = $recentPostsNum;
+	}
+
+
+	
 
 
 }

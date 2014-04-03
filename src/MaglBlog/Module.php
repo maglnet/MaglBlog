@@ -65,8 +65,9 @@ class Module
 				},
 				'BlogWidgetRecentPosts' => function($sl) {
 					$blogPostRepository = $sl->getServiceLocator()->get('MaglBlog\BlogPostRepository');
+					$blogOptions = $sl->getServiceLocator()->get('MaglBlog\BlogOptions');
 
-					return new BlogWidgetRecentPosts($blogPostRepository);
+					return new BlogWidgetRecentPosts($blogPostRepository, $blogOptions);
 				},
 			),
 		);

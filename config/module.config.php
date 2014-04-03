@@ -6,6 +6,7 @@
  */
 return array(
 	'magl_blog' => array(
+		'recent_posts_num' => 5,
 		'tag_cloud' => array(
 			'cloudDecorator' => array(
 				'decorator' => 'htmlcloud',

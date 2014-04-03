@@ -17,11 +17,11 @@ use Doctrine\ORM\EntityRepository;
 class BlogPostRepository extends EntityRepository
 {
 
-	public function findRecent()
+	public function findRecent($limit)
 	{
 		$em = $this->getEntityManager();
 		$query = $em->createQuery('SELECT p FROM MaglBlog\Entity\BlogPost p ORDER BY p.createDate DESC');
-		$query->setMaxResults(2);
+		$query->setMaxResults((int)$limit);
 		$result = $query->getResult();
 		return $result;
 	}
