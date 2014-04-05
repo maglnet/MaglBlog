@@ -1,0 +1,26 @@
+<?php
+$title = 'Blog';
+$this->headTitle($title);
+?>
+<div class="row">
+    <div class="col-md-12">
+		<table class="table table-striped">
+			<tr>
+				<th>#</th>
+				<th>Title</th>
+				<th>Actions</th>
+			</tr>
+
+			<?php foreach ($categories as $category) : ?>
+				<tr>
+					<td><?php echo $this->escapeHtml($category->getId()); ?></td>
+					<td><?php echo $this->escapeHtml($category->getName()); ?></td>
+					<td>
+						<a href="<?php echo $this->url('zfcadmin/maglblog/category', array('action' => 'edit', 'id' => $category->getId())); ?>">Edit</a>
+					</td>
+				</tr>
+			<?php endforeach; ?>
+		</table>
+    </div>
+</div>
+

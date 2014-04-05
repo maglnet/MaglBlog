@@ -17,6 +17,9 @@ use Doctrine\ORM\EntityRepository;
 class BlogPostRepository extends EntityRepository
 {
 
+	/**
+	 * @param integer $limit
+	 */
 	public function findRecent($limit)
 	{
 		$queryBuilder = $this->createQueryBuilder('p')
