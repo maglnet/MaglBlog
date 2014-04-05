@@ -87,7 +87,6 @@ return array(
 			
 			'MaglBlog\Controller\CategoryAdmin' => 'MaglBlog\Controller\Admin\CategoryAdminController',
 			'MaglBlog\Controller\BlogPostAdmin' => 'MaglBlog\Controller\Admin\BlogPostAdminController',
-			//'MaglBlog\Controller\BlogAdmin' => 'MaglBlog\Controller\BlogAdminController',
 		),
 	),
 	'service_manager' => array(
@@ -109,7 +108,7 @@ return array(
 				'options' => array(
 					'route' => '/blog',
 					'defaults' => array(
-						'controller' => 'Magl\Blog\Controller\Blog',
+						'controller' => 'MaglBlog\Controller\Blog',
 						'action' => 'list',
 					),
 				),
@@ -124,7 +123,7 @@ return array(
 								'id' => '[0-9]+',
 							),
 							'defaults' => array(
-								'controller' => 'Magl\Blog\Controller\Blog',
+								'controller' => 'MaglBlog\Controller\Blog',
 								'action' => 'category',
 							),
 						),
@@ -138,7 +137,7 @@ return array(
 								'id' => '[0-9]+',
 							),
 							'defaults' => array(
-								'controller' => 'Magl\Blog\Controller\Blog',
+								'controller' => 'MaglBlog\Controller\Blog',
 								'action' => 'post',
 							),
 						),
@@ -151,7 +150,7 @@ return array(
 								'tagUrlPart' => '[a-zA-Z][a-zA-Z0-9_-]*',
 							),
 							'defaults' => array(
-								'controller' => 'Magl\Blog\Controller\Blog',
+								'controller' => 'MaglBlog\Controller\Blog',
 								'action' => 'tag',
 							),
 						),
