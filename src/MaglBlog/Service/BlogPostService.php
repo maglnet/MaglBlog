@@ -33,9 +33,9 @@ class BlogPostService implements FactoryInterface
 		return $this;
 	}
 
-	public function getRecent()
+	public function getRecent($limit)
 	{
-		$recentBlogPosts = $this->blogPostRepo->findRecent();
+		$recentBlogPosts = $this->blogPostRepo->findRecent($limit);
 		return $recentBlogPosts;
 	}
 

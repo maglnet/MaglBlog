@@ -1,37 +1,42 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @author Matthias Glaub <magl@magl.net>
+ * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  */
 
 namespace MaglBlogTest\Repository;
 
-/**
- * Description of CategoryRepositoryTest
- *
- * @author matthias
- */
-class CategoryRepositoryTest extends \PHPUnit_Framework_TestCase
+class CategoryRepositoryTest extends AbstractTestRepository
 {
-	
-	/**
-	 *
-	 * @var \MaglBlog\Repository\CategoryRepository
-	 */
-	private $catRepo;
-	
-//	public function setUp(){
-//		$this->catRepo = \MaglBlogTest\Bootstrap::getServiceManager()->get('MaglBlog\CategoryRepository');
-//	}
-//	
-//	public function testEmptyCategories(){
-//		
-//		$cats = $this->catRepo->findAll();
-//		
-//		$this->assertEmpty($cats);
-//		
-//	}
-	
+	public function testFindWithActivePostsCount(){
+		
+		$queryBuilderMock = $this->getQueryBuilderMock();
+		
+		$queryBuilderMock->expects($this->once())
+			->method('select')
+			->with('c as category')
+			->willReturn($queryBuilderMock);
+		
+		$queryBuilderMock->expects($this->once())
+			->method('addSelect')
+			->with('count(p.id) as activeBlogCount')
+			->willReturn($queryBuilderMock);
+		
+		$queryBuilderMock->expects($this->once())
+			->method('innerJoin')
+			->with('c.blogPosts','p')
+			->willReturn($queryBuilderMock);
+		
+		$queryBuilderMock->expects($this->once())
+			->method('groupBy')
+			->with('c.id')
+			->willReturn($queryBuilderMock);
+		
+		$repoMock = $this->getRepositoryMockWithQueryBuilder('\MaglBlog\Repository\CategoryRepository', $queryBuilderMock);
+		
+		$repoMock->findWithActivePostsCount();
+		
+	}
 }
+

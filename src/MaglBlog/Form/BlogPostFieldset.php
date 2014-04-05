@@ -41,7 +41,7 @@ class BlogPostFieldset extends Fieldset implements InputFilterProviderInterface
 				'description' => 'insert title hereTitle',
 			),
 			'attributes' => array(
-				'class' => 'form-control',
+				'class' => 'form-control input-block-level',
 			),
 		));
 		$this->add(array(
@@ -51,7 +51,7 @@ class BlogPostFieldset extends Fieldset implements InputFilterProviderInterface
 				'label' => 'Teaser Text',
 			),
 			'attributes' => array(
-				'class' => 'form-control',
+				'class' => 'form-control input-block-level',
 			),
 		));
 		$this->add(array(
@@ -61,7 +61,7 @@ class BlogPostFieldset extends Fieldset implements InputFilterProviderInterface
 				'label' => 'Text',
 			),
 			'attributes' => array(
-				'class' => 'form-control',
+				'class' => 'form-control input-block-level',
 				'rows' => '25',
 			),
 		));
@@ -126,7 +126,7 @@ class BlogPostFieldset extends Fieldset implements InputFilterProviderInterface
 				'description' => 'insert comma separated tags',
 			),
 			'attributes' => array(
-				'class' => 'form-control',
+				'class' => 'form-control input-block-level',
 			),
 		));
 	}

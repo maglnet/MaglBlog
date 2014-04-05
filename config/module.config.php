@@ -5,6 +5,33 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  */
 return array(
+	'magl_blog' => array(
+		'recent_posts_num' => 5,
+		'tag_cloud' => array(
+			'cloudDecorator' => array(
+				'decorator' => 'htmlcloud',
+				'options'   => array(
+					//'separator' => "\n\n",
+					'htmlTags'  => array(
+						'div' => array(
+							'class' => 'maglblog-tag-cloud',
+						),
+					),
+				),
+			),
+			'tagDecorator' => array(
+				'decorator' => 'htmltag',
+				'options'   => array(
+					'minFontSize' => '10',
+					'maxFontSize' => '26',
+					//'classList' => array('tag1','tag2','tag3','tag4','tag5','tag6','tag7','tag8','tag9','tag10'),
+					'htmlTags'    => array(
+						'span' => array(),
+					),
+				),
+			),
+		)
+	),
 	'navigation' => array(
 		'default' => array(
 			'magl_blog' => array(
@@ -18,21 +45,60 @@ return array(
 				'route' => 'zfcadmin/maglblog',
 			),
 		),
+		'magl_blog_admin' => array(
+			array(
+				'label' => 'Posts',
+				'route' => 'zfcadmin/maglblog/post',
+				'pages' => array(
+					array(
+						'label' => 'List Posts',
+						'route' => 'zfcadmin/maglblog/post',
+						'params' => array('action' => 'list'),
+					),
+					array(
+						'label' => 'Create Post',
+						'route' => 'zfcadmin/maglblog/post',
+						'params' => array('action' => 'edit'),
+					),
+				),
+			),
+			array(
+				'label' => 'Categories',
+				'route' => 'zfcadmin/maglblog/category',
+				'params' => array('action' => 'edit'),
+				'pages' => array(
+					array(
+						'label' => 'List Categories',
+						'route' => 'zfcadmin/maglblog/category',
+						'params' => array('action' => 'list'),
+					),
+					array(
+						'label' => 'Create Category',
+						'route' => 'zfcadmin/maglblog/category',
+						'params' => array('action' => 'edit'),
+					),
+				),
+			),
+		),
 	),
 	'controllers' => array(
 		'factories' => array(
-			'MaglBlog\Controller\BlogAdmin' => 'MaglBlog\Controller\BlogAdminController',
 			'MaglBlog\Controller\Blog' => 'MaglBlog\Controller\BlogController',
+			
+			'MaglBlog\Controller\CategoryAdmin' => 'MaglBlog\Controller\Admin\CategoryAdminController',
+			'MaglBlog\Controller\BlogPostAdmin' => 'MaglBlog\Controller\Admin\BlogPostAdminController',
 		),
 	),
 	'service_manager' => array(
 		'factories' => array(
+			'MaglBlog\BlogOptions' => 'MaglBlog\Options\MaglBlogOptionsFactory',
 			'MaglBlog\TagService' => 'MaglBlog\Service\TagService',
 			'MaglBlog\CategoryService' => 'MaglBlog\Service\CategoryService',
 			'MaglBlog\BlogPostService' => 'MaglBlog\Service\BlogPostService',
 			'MaglBlog\TagRepository' => 'MaglBlog\Repository\TagFactory',
 			'MaglBlog\CategoryRepository' => 'MaglBlog\Repository\CategoryFactory',
 			'MaglBlog\BlogPostRepository' => 'MaglBlog\Repository\BlogPostFactory',
+			'magl_blog_admin_navigation' => 'MaglBlog\Navigation\AdminNavigationFactory',
 		)
 	),
 	'router' => array(
@@ -42,7 +108,7 @@ return array(
 				'options' => array(
 					'route' => '/blog',
 					'defaults' => array(
-						'controller' => 'Magl\Blog\Controller\Blog',
+						'controller' => 'MaglBlog\Controller\Blog',
 						'action' => 'list',
 					),
 				),
@@ -57,7 +123,7 @@ return array(
 								'id' => '[0-9]+',
 							),
 							'defaults' => array(
-								'controller' => 'Magl\Blog\Controller\Blog',
+								'controller' => 'MaglBlog\Controller\Blog',
 								'action' => 'category',
 							),
 						),
@@ -71,7 +137,7 @@ return array(
 								'id' => '[0-9]+',
 							),
 							'defaults' => array(
-								'controller' => 'Magl\Blog\Controller\Blog',
+								'controller' => 'MaglBlog\Controller\Blog',
 								'action' => 'post',
 							),
 						),
@@ -84,7 +150,7 @@ return array(
 								'tagUrlPart' => '[a-zA-Z][a-zA-Z0-9_-]*',
 							),
 							'defaults' => array(
-								'controller' => 'Magl\Blog\Controller\Blog',
+								'controller' => 'MaglBlog\Controller\Blog',
 								'action' => 'tag',
 							),
 						),
@@ -96,14 +162,35 @@ return array(
 					'maglblog' => array(
 						'type' => 'segment',
 						'options' => array(
-							'route' => '/blog[/][:action][/:id]',
-							'constraints' => array(
-								'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-								'id' => '[0-9]+',
-							),
+							'route' => '/blog[/]',
 							'defaults' => array(
-								'controller' => 'Magl\Blog\Controller\BlogAdmin',
-								'action' => 'index',
+								'controller' => 'MaglBlog\Controller\BlogPostAdmin',
+								'action' => 'list',
+							),
+						),
+						'may_terminate' => true,
+						'child_routes' => array(
+							'category' => array(
+								'type' => 'segment',
+								'options' => array(
+									'route' => 'category[/][:action][/:id]',
+									'defaults' => array(
+										'controller' => 'MaglBlog\Controller\CategoryAdmin',
+										'action' => 'edit',
+									),
+								),
+								'may_terminate' => true,
+							),
+							'post' => array(
+								'type' => 'segment',
+								'options' => array(
+									'route' => 'post[/][:action][/:id]',
+									'defaults' => array(
+										'controller' => 'MaglBlog\Controller\BlogPostAdmin',
+										'action' => 'list',
+									),
+								),
+								'may_terminate' => true,
 							),
 						),
 					),

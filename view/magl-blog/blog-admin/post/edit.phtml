@@ -25,9 +25,9 @@ $blogPostFieldset = $form->get('blog_post');
 foreach ($blogPostFieldset as $element) {
 	?>
 	<div class="form-group">
-	    <?=$element->getLabel() ? $this->formLabel($element) : ''?>
-		<?=$this->formElement($element);?>
-		<?=$this->formElementErrors($element);?>
+		<?= $element->getLabel() ? $this->formLabel($element) : '' ?>
+		<?= $this->formElement($element); ?>
+		<?= $this->formElementErrors($element); ?>
 	</div>
 	<?php
 }

@@ -17,12 +17,16 @@ use Doctrine\ORM\EntityRepository;
 class BlogPostRepository extends EntityRepository
 {
 
-	public function findRecent()
+	/**
+	 * @param integer $limit
+	 */
+	public function findRecent($limit)
 	{
-		$em = $this->getEntityManager();
-		$query = $em->createQuery('SELECT p FROM MaglBlog\Entity\BlogPost p ORDER BY p.createDate DESC');
-		$query->setMaxResults(2);
-		$result = $query->getResult();
+		$queryBuilder = $this->createQueryBuilder('p')
+			->addOrderBy('p.createDate', 'DESC')
+			->setMaxResults((int)$limit);
+		
+		$result = $queryBuilder->getQuery()->getResult();
 		return $result;
 	}
 	

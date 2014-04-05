@@ -51,7 +51,7 @@ class BlogPostServiceTest extends PHPUnit_Framework_TestCase
 		
 		$blogPostService = $serviceManager->get('MaglBlog\BlogPostService');
 		
-		$blogPosts = $blogPostService->getRecent();
+		$blogPosts = $blogPostService->getRecent(2);
 		
 		$this->assertSame($blogPosts, $this->blogPostCollection);
 	}

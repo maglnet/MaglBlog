@@ -19,9 +19,13 @@ class CategoryRepository extends EntityRepository
 
 	public function findWithActivePostsCount()
 	{
-		$em = $this->getEntityManager();
-		$query = $em->createQuery('SELECT c as category, count(p.id) as activeBlogCount FROM MaglBlog\Entity\Category c JOIN c.blogPosts p GROUP BY c.id');
-		$result = $query->getResult();
+		$queryBuilder = $this->createQueryBuilder('c')
+			->select('c as category')
+			->addSelect('count(p.id) as activeBlogCount')
+			->innerJoin('c.blogPosts','p')
+			->groupBy('c.id');
+		
+		$result = $queryBuilder->getQuery()->getResult();
 		return $result;
 	}
 }
