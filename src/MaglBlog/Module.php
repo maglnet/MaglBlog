@@ -41,7 +41,7 @@ class Module
 		return array(
 			'DoctrineModule',
 			'DoctrineORMModule',
-		//	'ZfcAdmin',
+			'ZfcAdmin',
 		);
 	}
 

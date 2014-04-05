@@ -77,8 +77,9 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
 		$this->assertTrue(is_array($config));
 		
-		$this->assertEquals(2, count($config));
+		$this->assertEquals(3, count($config));
 		
+		$this->assertTrue(in_array('ZfcAdmin', $config));
 		$this->assertTrue(in_array('DoctrineModule', $config));
 		$this->assertTrue(in_array('DoctrineORMModule', $config));
 		
