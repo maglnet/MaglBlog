@@ -119,7 +119,6 @@ return array(
 						'options' => array(
 							'route' => '/category[/:id][/:title]',
 							'constraints' => array(
-								'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
 								'id' => '[0-9]+',
 							),
 							'defaults' => array(
@@ -133,7 +132,6 @@ return array(
 						'options' => array(
 							'route' => '/post[/:id][/:title]',
 							'constraints' => array(
-								'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
 								'id' => '[0-9]+',
 							),
 							'defaults' => array(

@@ -30,29 +30,24 @@ class Bootstrap
 		static::initAutoloader();
 
 		// use ModuleManager to load this module and it's dependencies
-		$baseConfig = array(
+		$config = array(
 			'module_listener_options' => array(
 				'module_paths' => $zf2ModulePaths,
+				'config_glob_paths' => array(
+					__DIR__ . '/TestConfig.dist.php',
+				)
 			),
 			'modules' => array(
 				'DoctrineModule',
 				'DoctrineORMModule',
-//				'ZfcAdmin',
+				'ZfcAdmin',
+				'MaglMarkdown',
 				'MaglBlog',
 			)
 		);
-		
-		$testConfig = include 'TestConfig.dist.php';
-		
-		$config = \Zend\Stdlib\ArrayUtils::merge($baseConfig, $testConfig);
-		
-		$serviceManager = new \Zend\ServiceManager\ServiceManager(new \Zend\Mvc\Service\ServiceManagerConfig());
-        $serviceManager->setService('ApplicationConfig', $config);
-        $serviceManager->get('ModuleManager')->loadModules();
-        static::$serviceManager = $serviceManager;
-		
-		//$app = Application::init($config);
-		//static::$serviceManager = $app->getServiceManager();
+
+		$app = Application::init($config);
+		static::$serviceManager = $app->getServiceManager();
 	}
 
 	/**
@@ -98,6 +93,6 @@ class Bootstrap
 		}
 		return $dir . '/' . $path;
 	}
-
 }
+
 Bootstrap::init();

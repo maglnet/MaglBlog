@@ -77,12 +77,15 @@ class BlogController extends AbstractActionController implements FactoryInterfac
 		try {
 			$blogPost = $this->getBlogPostRepository()->find((int) $this->params('id'));
 
+			if(!$blogPost){
+				throw new Exception('Post not found');
+			}
+			
 			if (!$this->params('title') || $this->params('title') != $blogPost->getTitleForUrl()) {
-				$this->redirect()
+				return $this->redirect()
 						->toRoute('maglblog/post', array('id' => $blogPost->getId(), 'title' => $blogPost->getTitleForUrl()))
 						->setStatusCode(301)
 				;
-				return;
 			}
 		} catch (Exception $exc) {
 			$this->getResponse()->setStatusCode(404);
