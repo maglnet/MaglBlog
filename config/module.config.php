@@ -65,7 +65,7 @@ return array(
 			array(
 				'label' => 'Categories',
 				'route' => 'zfcadmin/maglblog/category',
-				'params' => array('action' => 'edit'),
+				'params' => array('action' => 'list'),
 				'pages' => array(
 					array(
 						'label' => 'List Categories',
