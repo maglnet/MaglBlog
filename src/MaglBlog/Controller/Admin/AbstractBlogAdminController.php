@@ -29,6 +29,9 @@ abstract class AbstractBlogAdminController extends AbstractActionController impl
 	 */
 	protected $sm;
 
+	/**
+	 * @param ViewModel $contentView
+	 */
 	protected function getAdminView($contentView)
 	{
 		$blogAdminView = new ViewModel();
