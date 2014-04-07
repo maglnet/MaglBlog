@@ -25,12 +25,11 @@ class CategoryAdminController extends AbstractBlogAdminController
 		}
 
 		$form = new CategoryForm($this->getObjectManager());
-		$form->setHydrator(new DoctrineObject($this->getObjectManager(), get_class($category)));
+		$form->setHydrator(new DoctrineObject($this->getObjectManager(), true));
 		$form->bind($category);
 
 		$request = $this->getRequest();
 		if ($request->isPost()) {
-			//$form->setInputFilter($blogPost->getInputFilter());
 			$form->setData($request->getPost());
 
 			if ($form->isValid()) {
@@ -38,10 +37,9 @@ class CategoryAdminController extends AbstractBlogAdminController
 				$this->getObjectManager()->flush();
 
 				// Redirect to list
-				return $this->redirect()->toRoute('zfcadmin/maglblog');
+				return $this->redirect()->toRoute('zfcadmin/maglblog/category', array('action' => 'list'));
 			}
 		}
-
 
 		$editView = new ViewModel(array(
 			'id' => $id,

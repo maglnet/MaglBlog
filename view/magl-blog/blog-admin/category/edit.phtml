@@ -11,8 +11,8 @@ $this->headTitle($title);
 <?php
 $form = $this->form;
 $form->setAttribute(
-	'action', $this->url('zfcadmin/maglblog', array(
-		'action' => 'editCategory',
+	'action', $this->url('zfcadmin/maglblog/category', array(
+		'action' => 'edit',
 		'id' => $this->id,
 		)
 ));
