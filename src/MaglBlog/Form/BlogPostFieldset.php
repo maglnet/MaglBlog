@@ -7,7 +7,7 @@
 
 namespace MaglBlog\Form;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use MaglBlog\Entity\BlogPost;
 use Zend\Form\Fieldset;
@@ -23,7 +23,7 @@ class BlogPostFieldset extends Fieldset implements InputFilterProviderInterface
 
 	protected $inputFilter;
 
-	public function __construct(EntityManagerInterface $objectManager)
+	public function __construct(ObjectManager $objectManager)
 	{
 		parent::__construct('blog_post');
 		$this->setHydrator(new DoctrineHydrator($objectManager))
