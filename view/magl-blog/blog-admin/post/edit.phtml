@@ -9,8 +9,8 @@ $this->headTitle($title);
 <?php
 $form = $this->form;
 $form->setAttribute(
-	'action', $this->url('zfcadmin/maglblog', array(
-		'action' => 'editPost',
+	'action', $this->url('zfcadmin/maglblog/post', array(
+		'action' => 'edit',
 		'id' => $this->id,
 		)
 ));

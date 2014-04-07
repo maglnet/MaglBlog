@@ -42,7 +42,7 @@ class BlogPostAdminController extends AbstractBlogAdminController
 		}
 
 		$form = new BlogPostForm($this->getObjectManager());
-		$form->setHydrator(new DoctrineObject($this->getObjectManager(), get_class($blogPost)));
+		$form->setHydrator(new DoctrineObject($this->getObjectManager(), true));
 		$form->bind($blogPost);
 		$form->get('submit')->setAttribute('value', 'Edit');
 
@@ -53,7 +53,6 @@ class BlogPostAdminController extends AbstractBlogAdminController
 
 		$request = $this->getRequest();
 		if ($request->isPost()) {
-			//$form->setInputFilter($blogPost->getInputFilter());
 			$form->setData($request->getPost());
 
 			if ($form->isValid()) {
@@ -67,7 +66,7 @@ class BlogPostAdminController extends AbstractBlogAdminController
 				$this->getObjectManager()->flush();
 
 				// Redirect to list
-				return $this->redirect()->toRoute('zfcadmin/maglblog');
+				return $this->redirect()->toRoute('zfcadmin/maglblog/post', array('action' => 'list'));
 			}
 		}
 
