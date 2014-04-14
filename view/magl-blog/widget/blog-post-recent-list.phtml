@@ -6,8 +6,8 @@
 				/* @var $blogPost MaglBlog\Entity\BlogPost */
 				?>
 				<li>
+					<span class="text-muted"><?= $this->dateFormat($blogPost->getCreateDate(), IntlDateFormatter::SHORT, IntlDateFormatter::NONE) ?></span><br/>
 					<a href="<?= $this->BlogUrlToPost($blogPost); ?>">
-						<span class="text-muted"><?= $this->dateFormat($blogPost->getCreateDate(), IntlDateFormatter::SHORT, IntlDateFormatter::SHORT) ?></span><br/>
 						<?= $this->escapeHtml($blogPost->getTitle()) ?>
 					</a>
 				</li>

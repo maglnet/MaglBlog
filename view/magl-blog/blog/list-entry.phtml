@@ -6,23 +6,21 @@ if ($post->getCategory()) {
 <h2>
 	<a href="<?= $this->escapeHtmlAttr($this->BlogUrlToPost($post)) ?>"><?php echo $this->escapeHtml($post->getTitle()); ?></a>
 </h2>
-<p class="text-muted">
-<div>
-	<?php foreach ($post->getTags() as $tag) : ?>
-		<span class="label label-default"><?= $this->escapeHtml($tag->getName()) ?></span>
-	<?php endforeach; ?>
-</div>
-</p>
-<p class="text-muted">
-<div>
-	<?php echo $this->dateFormat($post->getCreateDate(), IntlDateFormatter::LONG, IntlDateFormatter::NONE); ?>
-	<?php if ($post->getCategory()): ?>
-		in <a href="<?= $this->escapeHtmlAttr($categoryUrl) ?>"><?php echo $this->escapeHtml($post->getCategory()->getName()); ?></a>
-	<?php endif; ?>
-</div>
 <p>
 	<?php echo $this->markdown($post->getTeaserText()); ?>
 </p>
 <p>
 	<a class="btn btn-default btn-xs" href="<?= $this->escapeHtmlAttr($this->BlogUrlToPost($post)) ?>">read...</a>
 </p>
+<p class="text-muted">
+<?php echo $this->dateFormat($post->getCreateDate(), IntlDateFormatter::LONG, IntlDateFormatter::NONE); ?>
+<?php if ($post->getCategory()): ?>
+ &dash; <a href="<?= $this->escapeHtmlAttr($categoryUrl) ?>"><?php echo $this->escapeHtml($post->getCategory()->getName()); ?></a>
+<?php endif; ?>
+</p>
+<div>
+	<?php foreach ($post->getTags() as $tag) : ?>
+			<a class="label label-default" href="<?=$this->url('maglblog/tag', array('tagUrlPart' => $tag->getUrlPart()))?>"><?= $this->escapeHtml($tag->getName()) ?></a>
+	<?php endforeach; ?>
+</div>
+<hr/>

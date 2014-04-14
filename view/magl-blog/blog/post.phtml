@@ -5,23 +5,26 @@ $this->headTitle($blogPost->getTitle());
 
 $createDate = $blogPost->getCreateDate();
 
+if ($blogPost->getCategory()) {
+	$categoryUrl = $this->url('maglblog/category', array('id' => $blogPost->getCategory()->getId(), 'title' => $blogPost->getCategory()->getName()));
+}
+
 ?>
 <div class="row">
     <div class="col-md-12" itemscope itemtype="http://schema.org/BlogPosting">
 		<h2 itemprop="name"><?php echo $this->escapeHtml($blogPost->getTitle()); ?></h2>
 		<p class="text-muted">
+			<time itemprop="dateCreated" datetime="<?=$createDate->format('Y-m-d')?>"><?php echo $this->dateFormat($blogPost->getCreateDate(), IntlDateFormatter::LONG, IntlDateFormatter::NONE);?></time>
+			<?php if ($blogPost->getCategory()): ?>
+			&dash; <a href="<?= $this->escapeHtmlAttr($categoryUrl) ?>"><?php echo $this->escapeHtml($blogPost->getCategory()->getName()); ?></a>
+			<?php endif; ?>
+		</p>
+		<div class="lead"><?php echo $this->markdown($blogPost->getTeaserText()); ?></div>
+		<div itemprop="text"><?php echo $this->markdown($blogPost->getText()); ?></div>
+		<p class="text-muted">
 		<?php foreach($blogPost->getTags() as $tag) : ?>
-		<span class="label label-default"><?=$this->escapeHtml($tag->getName())?></span>
+			<a class="label label-default" href="<?=$this->url('maglblog/tag', array('tagUrlPart' => $tag->getUrlPart()))?>"><?= $this->escapeHtml($tag->getName()) ?></a>
 		<?php endforeach; ?>
 		</p>
-		<p class="text-muted">
-			Created <time itemprop="dateCreated" datetime="<?=$createDate->format('Y-m-d')?>"><?php echo $this->dateFormat($blogPost->getCreateDate(), IntlDateFormatter::LONG, IntlDateFormatter::NONE);?></time>
-		</p>
-		<?php if ($blogPost->getCategory()): ?>
-		<p class="text-muted">
-			Category: <?php echo $this->escapeHtml($blogPost->getCategory()->getName()); ?>
-		</p>
-		<?php endif; ?>
-		<div itemprop="text"><?php echo $this->markdown($blogPost->getText()); ?></div>
     </div>
 </div>
