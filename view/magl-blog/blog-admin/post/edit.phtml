@@ -18,6 +18,7 @@ $form->prepare();
 
 
 echo $this->form()->openTag($form);
+echo $this->formRow($form->get('csrf'));
 
 /* @var $blogPostFieldset \MaglBlog\Form\BlogPostFieldset */
 $blogPostFieldset = $form->get('blog_post');
@@ -31,18 +32,5 @@ foreach ($blogPostFieldset as $element) {
 	</div>
 	<?php
 }
-
-//echo $this->formRow($product->get('name'));
-//echo $this->formRow($product->get('price'));
-//echo $this->formCollection($product->get('categories'));
-//
-//$brand = $product->get('brand');
-//
-//echo $this->formRow($brand->get('name'));
-//echo $this->formRow($brand->get('url'));
-//
-//echo $this->formHidden($form->get('csrf'));
-//echo $this->formElement($form->get('submit'));
-//
 echo $this->formElement($form->get('submit'));
 echo $this->form()->closeTag();

@@ -31,6 +31,7 @@ class CategoryFormTest extends \PHPUnit_Framework_TestCase
 		$this->assertTrue($catForm->has('id'));
 		$this->assertTrue($catForm->has('name'));
 		$this->assertTrue($catForm->has('submit'));
+		$this->assertTrue($catForm->has('csrf'));
 	}
 	
 }

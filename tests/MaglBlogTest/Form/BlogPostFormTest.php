@@ -30,6 +30,7 @@ class BlogPostFormTest extends \PHPUnit_Framework_TestCase
 		$this->assertGreaterThan(0, $bpf->count());
 		$this->assertTrue($bpf->has('blog_post'));
 		$this->assertTrue($bpf->has('submit'));
+		$this->assertTrue($bpf->has('csrf'));
 	}
 	
 }

@@ -12,7 +12,7 @@ use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use MaglBlog\Entity\Category;
 use Zend\Form\Form;
 
-class CategoryForm extends Form
+class CategoryForm extends Form implements \Zend\InputFilter\InputFilterProviderInterface
 {
     public function __construct(ObjectManager $objectManager)
     {
@@ -20,6 +20,11 @@ class CategoryForm extends Form
 		$this->setHydrator(new DoctrineHydrator($objectManager))
 			->setObject(new Category());
 
+		$this->add(array(
+			'type' => 'Zend\Form\Element\Csrf',
+			'name' => 'csrf',
+		));
+		
 		$this->add(array(
 			'name' => 'id',
 			'type' => 'Hidden',
@@ -43,5 +48,13 @@ class CategoryForm extends Form
 				'id' => 'submitbutton',
 			),
 		));
-    }
+		
+	}
+
+	public function getInputFilterSpecification()
+	{
+		return array(
+			'csrf' => $this->get('csrf')->getInputSpecification()
+		);
+	}
 }
