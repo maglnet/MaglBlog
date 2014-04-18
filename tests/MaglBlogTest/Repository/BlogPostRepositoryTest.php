@@ -103,8 +103,8 @@ class BlogPostRepositoryTest extends AbstractTestRepository
 
 		$dates = $repo->getStartEndDate(2014);
 
-		$this->assertEquals($dates['dateStart'], new \DateTimeImmutable('2014-01-01 00:00:00'));
-		$this->assertEquals($dates['dateEnd'], new \DateTimeImmutable('2015-01-01 00:00:00'));
+		$this->assertEquals($dates['dateStart'], new \DateTime('2014-01-01 00:00:00'));
+		$this->assertEquals($dates['dateEnd'], new \DateTime('2015-01-01 00:00:00'));
 
 		$this->assertTrue(is_array($dates));
 	}
@@ -116,8 +116,8 @@ class BlogPostRepositoryTest extends AbstractTestRepository
 
 		$dates = $repo->getStartEndDate(2014, 02);
 
-		$this->assertEquals($dates['dateStart'], new \DateTimeImmutable('2014-02-01 00:00:00'));
-		$this->assertEquals($dates['dateEnd'], new \DateTimeImmutable('2014-03-01 00:00:00'));
+		$this->assertEquals($dates['dateStart'], new \DateTime('2014-02-01 00:00:00'));
+		$this->assertEquals($dates['dateEnd'], new \DateTime('2014-03-01 00:00:00'));
 
 		$this->assertTrue(is_array($dates));
 	}
