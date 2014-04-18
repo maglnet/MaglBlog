@@ -51,6 +51,12 @@ class BlogController extends AbstractActionController implements FactoryInterfac
 		return $this->sm->get('MaglBlog\BlogPostService')->getListView($blogPosts);
 	}
 	
+	public function archiveAction()	
+	{
+		$blogPosts = $this->getBlogPostRepository()->findByDate(10, (int) $this->params('year'), $this->params('month'));
+		return $this->sm->get('MaglBlog\BlogPostService')->getListView($blogPosts);
+	}
+ 
 	public function categoryAction()	
 	{
 		return $this->auxAction($this->getCategoryRepository()->find((int) $this->params('id')));

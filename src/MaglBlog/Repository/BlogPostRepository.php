@@ -30,4 +30,45 @@ class BlogPostRepository extends EntityRepository
 		return $result;
 	}
 	
+	/**
+	 * @param integer $limit
+	 * @param integer $year
+	 * @param integer|null $month
+	 */
+	public function findByDate($limit, $year, $month = null)
+	{
+		$dates = $this->getStartEndDate($year, $month);
+		
+		$queryBuilder = $this->createQueryBuilder('p')
+			->where('p.createDate >= :dateStart')
+			->andWhere('p.createDate < :dateEnd')
+			->addOrderBy('p.createDate', 'DESC')
+			->setMaxResults((int)$limit);
+		
+		$queryBuilder->setParameter('dateStart', $dates['dateStart'], \Doctrine\DBAL\Types\Type::DATETIME);
+		$queryBuilder->setParameter('dateEnd', $dates['dateEnd'], \Doctrine\DBAL\Types\Type::DATETIME);
+		
+		$result = $queryBuilder->getQuery()->getResult();
+		return $result;
+	}
+	
+	public function getStartEndDate($year, $month = null){
+		
+		$dates = array();
+		
+		$year = (int)$year;
+		
+		if(null == $month){
+			$month = '01';
+			$dates['dateStart'] = new \DateTimeImmutable($year.'-'.$month.'-01 00:00:00');
+			$dates['dateEnd'] = $dates['dateStart']->add(new \DateInterval('P1Y'));
+		} else {
+			$month = sprintf("%02d", $month);
+			$dates['dateStart'] = new \DateTimeImmutable($year.'-'.$month.'-01 00:00:00');
+			$dates['dateEnd'] = $dates['dateStart']->add(new \DateInterval('P1M'));
+		}
+		
+		return $dates;
+	}
+	
 }

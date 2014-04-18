@@ -153,6 +153,20 @@ return array(
 							),
 						),
 					),
+					'archive' => array(
+						'type' => 'segment',
+						'options' => array(
+							'route' => '/archive/:year[/][:month]',
+							'constraints' => array(
+								'year' => '\d{4}',
+								'month' => '\d{2}',
+							),
+							'defaults' => array(
+								'controller' => 'MaglBlog\Controller\Blog',
+								'action' => 'archive',
+							),
+						),
+					),
 				),
 			),
 			'zfcadmin' => array(
