@@ -15,51 +15,68 @@ namespace MaglBlogTest\Options;
  */
 class MaglBlogOptionsTest extends \PHPUnit_Framework_TestCase
 {
-	public function testShippedConfigOK(){
-		
+
+	public function testShippedConfigOK()
+	{
+
 		$sm = \MaglBlogTest\Bootstrap::getServiceManager();
 		$config = $sm->get('config');
-		
+
 		$blogOptions = new \MaglBlog\Options\MaglBlogOptions($config['magl_blog']);
-		
+
 		$this->assertTrue(is_array($blogOptions->getTagCloud()));
 	}
-	
-	public function testTagCloudWidgetNoArrayGiven(){
+
+	public function testTagCloudWidgetNoArrayGiven()
+	{
 		$sm = \MaglBlogTest\Bootstrap::getServiceManager();
 
 		$blogOptions = new \MaglBlog\Options\MaglBlogOptions();
-		
+
 		$this->setExpectedException('InvalidArgumentException');
-		
+
 		$blogOptions->setTagCloud('no array');
 	}
-	
-	public function testTagCloudWidgetMissingTagDecorator(){
+
+	public function testTagCloudWidgetMissingTagDecorator()
+	{
 		$sm = \MaglBlogTest\Bootstrap::getServiceManager();
 
 		$blogOptions = new \MaglBlog\Options\MaglBlogOptions();
-		
+
 		$this->setExpectedException('InvalidArgumentException');
-		
+
 		$blogOptions->setTagCloud(array(
 			'cloudDecorator' => array(
 				'foo' => 'bar',
 			)
 		));
 	}
-	
-	public function testTagCloudWidgetMissingCloudDecorator(){
+
+	public function testTagCloudWidgetMissingCloudDecorator()
+	{
 		$sm = \MaglBlogTest\Bootstrap::getServiceManager();
 
 		$blogOptions = new \MaglBlog\Options\MaglBlogOptions();
-		
+
 		$this->setExpectedException('InvalidArgumentException');
-		
+
 		$blogOptions->setTagCloud(array(
 			'tagDecorator' => array(
 				'foo' => 'bar',
 			)
 		));
+	}
+
+	public function testSetGetRecentPostsNum()
+	{
+		$sm = \MaglBlogTest\Bootstrap::getServiceManager();
+
+		$postsNum = 5;
+
+		$blogOptions = new \MaglBlog\Options\MaglBlogOptions();
+
+		$blogOptions->setRecentPostsNum($postsNum);
+		$this->assertEquals($postsNum, $blogOptions->getRecentPostsNum());
 	}
 }
