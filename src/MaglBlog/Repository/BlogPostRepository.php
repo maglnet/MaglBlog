@@ -60,15 +60,15 @@ class BlogPostRepository extends EntityRepository
 		
 		if(null == $month){
 			$month = '01';
-			$dates['dateStart'] = new \DateTime($year.'-'.$month.'-01 00:00:00');
-			$dates['dateEnd'] = clone $dates['dateStart'];
-			$dates['dateEnd']->add(new \DateInterval('P1Y'));
+            $interval = 'P1Y';
 		} else {
 			$month = sprintf("%02d", $month);
-			$dates['dateStart'] = new \DateTime($year.'-'.$month.'-01 00:00:00');
-			$dates['dateEnd'] = clone $dates['dateStart'];
-			$dates['dateEnd']->add(new \DateInterval('P1M'));
+            $interval = 'P1M';
 		}
+        
+        $dates['dateStart'] = new \DateTime($year.'-'.$month.'-01 00:00:00');
+        $dates['dateEnd'] = clone $dates['dateStart'];
+        $dates['dateEnd']->add(new \DateInterval($interval));
 		
 		return $dates;
 	}
