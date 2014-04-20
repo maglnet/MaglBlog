@@ -35,15 +35,14 @@ class BlogPostRepository extends EntityRepository
 	 * @param integer $year
 	 * @param integer|null $month
 	 */
-	public function findByDate($limit, $year, $month = null)
+	public function findByDate($year, $month = null)
 	{
 		$dates = $this->getStartEndDate($year, $month);
 		
 		$queryBuilder = $this->createQueryBuilder('p')
 			->where('p.createDate >= :dateStart')
 			->andWhere('p.createDate < :dateEnd')
-			->addOrderBy('p.createDate', 'DESC')
-			->setMaxResults((int)$limit);
+			->addOrderBy('p.createDate', 'DESC');
 		
 		$queryBuilder->setParameter('dateStart', $dates['dateStart'], \Doctrine\DBAL\Types\Type::DATETIME);
 		$queryBuilder->setParameter('dateEnd', $dates['dateEnd'], \Doctrine\DBAL\Types\Type::DATETIME);
