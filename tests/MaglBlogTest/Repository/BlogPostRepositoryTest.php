@@ -45,11 +45,6 @@ class BlogPostRepositoryTest extends AbstractTestRepository
 			->willReturn($queryBuilderMock);
 
 		$queryBuilderMock->expects($this->once())
-			->method('setMaxResults')
-			->with($limit)
-			->willReturn($queryBuilderMock);
-
-		$queryBuilderMock->expects($this->once())
 			->method('where')
 			->with('p.createDate >= :dateStart')
 			->willReturn($queryBuilderMock);
@@ -61,7 +56,7 @@ class BlogPostRepositoryTest extends AbstractTestRepository
 
 		$repoMock = $this->getRepositoryMockWithQueryBuilder('\MaglBlog\Repository\BlogPostRepository', $queryBuilderMock);
 
-		$repoMock->findByDate($limit, 2014);
+		$repoMock->findByDate(2014);
 	}
 
 	public function testFindByDate()
@@ -77,11 +72,6 @@ class BlogPostRepositoryTest extends AbstractTestRepository
 			->willReturn($queryBuilderMock);
 
 		$queryBuilderMock->expects($this->once())
-			->method('setMaxResults')
-			->with($limit)
-			->willReturn($queryBuilderMock);
-
-		$queryBuilderMock->expects($this->once())
 			->method('where')
 			->with('p.createDate >= :dateStart')
 			->willReturn($queryBuilderMock);
@@ -93,7 +83,7 @@ class BlogPostRepositoryTest extends AbstractTestRepository
 
 		$repoMock = $this->getRepositoryMockWithQueryBuilder('\MaglBlog\Repository\BlogPostRepository', $queryBuilderMock);
 
-		$repoMock->findByDate($limit, 2014, 5);
+		$repoMock->findByDate(2014, 5);
 	}
 
 	public function testGetStartEndDateByYear()
