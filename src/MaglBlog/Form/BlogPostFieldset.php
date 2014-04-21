@@ -177,7 +177,7 @@ class BlogPostFieldset extends Fieldset implements InputFilterProviderInterface
 			'text' => array(
 				'required' => true,
 				'filters' => array(
-					array('name' => 'StripTags'),
+//					array('name' => 'StripTags'),
 					array('name' => 'StringTrim'),
 				),
 				'validators' => array(
