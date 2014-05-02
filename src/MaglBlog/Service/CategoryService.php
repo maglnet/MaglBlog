@@ -18,21 +18,21 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class CategoryService implements FactoryInterface
 {
 
-	/**
-	 *
-	 * @var \MaglBlog\Repository\Category
-	 */
-	private $categoryRepo;
+    /**
+     *
+     * @var \MaglBlog\Repository\Category
+     */
+    private $categoryRepo;
 
-	public function createService(ServiceLocatorInterface $serviceLocator)
-	{
-		$this->categoryRepo = $serviceLocator->get('MaglBlog\CategoryRepository');
-		return $this;
-	}
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        $this->categoryRepo = $serviceLocator->get('MaglBlog\CategoryRepository');
+        return $this;
+    }
 
-	public function getListForWidget()
-	{
-		$categories = $this->categoryRepo->findBy(array(), array('name' => 'ASC'));
-		return $categories;
-	}
+    public function getListForWidget()
+    {
+        $categories = $this->categoryRepo->findBy(array(), array('name' => 'ASC'));
+        return $categories;
+    }
 }

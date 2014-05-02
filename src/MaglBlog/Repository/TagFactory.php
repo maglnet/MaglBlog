@@ -17,8 +17,8 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class TagFactory extends BaseFactory
 {
 
-	public function createService(ServiceLocatorInterface $serviceLocator)
-	{
-		return $this->createServiceForClass('\MaglBlog\Entity\Tag', $serviceLocator);
-	}
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        return $this->createServiceForClass('\MaglBlog\Entity\Tag', $serviceLocator);
+    }
 }

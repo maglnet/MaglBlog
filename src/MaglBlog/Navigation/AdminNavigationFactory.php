@@ -9,7 +9,7 @@ namespace MaglBlog\Navigation;
 
 class AdminNavigationFactory extends \Zend\Navigation\Service\DefaultNavigationFactory
 {
-	protected function getName()
+    protected function getName()
     {
         return 'magl_blog_admin';
     }

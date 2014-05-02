@@ -14,24 +14,24 @@ use Doctrine\ORM\EntityRepository;
  *
  * @author matthias
  */
-class TagRepository extends EntityRepository 
+class TagRepository extends EntityRepository
 {
 
-	public function findWithPostCount()
-	{
-		$queryBuilder = $this->createQueryBuilder('t')
-			->select('t as tag')
-			->addSelect('count(p.id) as postCount')
-			->innerJoin('t.blogPosts','p')
-			->groupBy('t.id')
-			->orderBy('t.name');
-		
-		$result = $queryBuilder->getQuery()->getResult();
-		return $result;
-	}
-	
-	public function findOneByUrlPart($urlPart)
-	{
-		return $this->findOneBy(array('url_part' => $urlPart));
-	}
+    public function findWithPostCount()
+    {
+        $queryBuilder = $this->createQueryBuilder('t')
+            ->select('t as tag')
+            ->addSelect('count(p.id) as postCount')
+            ->innerJoin('t.blogPosts','p')
+            ->groupBy('t.id')
+            ->orderBy('t.name');
+
+        $result = $queryBuilder->getQuery()->getResult();
+        return $result;
+    }
+
+    public function findOneByUrlPart($urlPart)
+    {
+        return $this->findOneBy(array('url_part' => $urlPart));
+    }
 }

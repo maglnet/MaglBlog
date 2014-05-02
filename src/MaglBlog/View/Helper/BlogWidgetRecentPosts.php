@@ -18,26 +18,27 @@ use Zend\View\Helper\AbstractHelper;
  */
 class BlogWidgetRecentPosts extends AbstractHelper
 {
-	/**
-	 * 
-	 * @var BlogPostRepository
-	 */
-	private $blogPostRepo;
-	
-	/**
-	 * 
-	 * @var MaglBlogOptions
-	 */
-	private $blogOptions;
-	
-	public function __construct(BlogPostRepository $blogPostRepository, MaglBlogOptions $blogOptions)
-	{
-		$this->blogPostRepo = $blogPostRepository;
-		$this->blogOptions = $blogOptions;
-	}
-	
-	public function __invoke(){
-		$blogPosts = $this->blogPostRepo->findRecent($this->blogOptions->getRecentPostsNum());
-		return $this->getView()->render('magl-blog/widget/blog-post-recent-list.phtml', array('blogPosts' => $blogPosts));
-	}
+    /**
+     *
+     * @var BlogPostRepository
+     */
+    private $blogPostRepo;
+
+    /**
+     *
+     * @var MaglBlogOptions
+     */
+    private $blogOptions;
+
+    public function __construct(BlogPostRepository $blogPostRepository, MaglBlogOptions $blogOptions)
+    {
+        $this->blogPostRepo = $blogPostRepository;
+        $this->blogOptions = $blogOptions;
+    }
+
+    public function __invoke()
+    {
+        $blogPosts = $this->blogPostRepo->findRecent($this->blogOptions->getRecentPostsNum());
+        return $this->getView()->render('magl-blog/widget/blog-post-recent-list.phtml', array('blogPosts' => $blogPosts));
+    }
 }

@@ -17,8 +17,8 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class CategoryFactory extends BaseFactory
 {
 
-	public function createService(ServiceLocatorInterface $serviceLocator)
-	{
-		return $this->createServiceForClass('\MaglBlog\Entity\Category', $serviceLocator);
-	}
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        return $this->createServiceForClass('\MaglBlog\Entity\Category', $serviceLocator);
+    }
 }

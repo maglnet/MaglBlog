@@ -20,25 +20,26 @@ use Zend\View\HelperPluginManager;
  */
 class BlogUrlToPostTest extends AbstractHttpControllerTestCase
 {
-	/**
-	 *
-	 * @var ServiceManager
-	 */
-	private $sm;
-	
-	public function setUp(){
-		$this->sm = Bootstrap::getServiceManager();
-	}
-	
-	public function testGetViewHelper()
-	{
-		/* @var $view HelperPluginManager */
-		$viewHelper = $this->sm->get('ViewHelperManager');
-		$viewHelper->setInvokableClass('url', 'Zend\View\Helper\Url');
+    /**
+     *
+     * @var ServiceManager
+     */
+    private $sm;
 
-		$blogPostUrl = $viewHelper->get('BlogUrlToPost');
-		$this->assertInstanceOf('MaglBlog\View\Helper\BlogUrlToPost', $blogPostUrl);
-		
-	}
+    public function setUp()
+    {
+        $this->sm = Bootstrap::getServiceManager();
+    }
+
+    public function testGetViewHelper()
+    {
+        /* @var $view HelperPluginManager */
+        $viewHelper = $this->sm->get('ViewHelperManager');
+        $viewHelper->setInvokableClass('url', 'Zend\View\Helper\Url');
+
+        $blogPostUrl = $viewHelper->get('BlogUrlToPost');
+        $this->assertInstanceOf('MaglBlog\View\Helper\BlogUrlToPost', $blogPostUrl);
+
+    }
 
 }

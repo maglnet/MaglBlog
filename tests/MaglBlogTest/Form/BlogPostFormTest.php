@@ -15,22 +15,22 @@ namespace MaglBlogTest\Form;
  */
 class BlogPostFormTest extends \PHPUnit_Framework_TestCase
 {
-	
-	public function testForm(){
-	
-		$objectManagerMock = $this
-			->getMockBuilder('\Doctrine\ORM\EntityManager')
-			->disableOriginalConstructor()
-			->getMock();
-		
-		$bpf = new \MaglBlog\Form\BlogPostForm($objectManagerMock);
-		
-		$this->assertInstanceOf('Zend\Form\Form', $bpf);
-		
-		$this->assertGreaterThan(0, $bpf->count());
-		$this->assertTrue($bpf->has('blog_post'));
-		$this->assertTrue($bpf->has('submit'));
-		$this->assertTrue($bpf->has('csrf'));
-	}
-	
+
+    public function testForm()
+    {
+        $objectManagerMock = $this
+            ->getMockBuilder('\Doctrine\ORM\EntityManager')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $bpf = new \MaglBlog\Form\BlogPostForm($objectManagerMock);
+
+        $this->assertInstanceOf('Zend\Form\Form', $bpf);
+
+        $this->assertGreaterThan(0, $bpf->count());
+        $this->assertTrue($bpf->has('blog_post'));
+        $this->assertTrue($bpf->has('submit'));
+        $this->assertTrue($bpf->has('csrf'));
+    }
+
 }

@@ -15,117 +15,117 @@ use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 class BlogControllerTest extends AbstractHttpControllerTestCase
 {
 
-	private $sm;
-	protected $traceError = true;
+    private $sm;
+    protected $traceError = true;
 
-	protected function setUp()
-	{
-		$this->sm = Bootstrap::getServiceManager();
-		$applicationConfig = $this->sm->get('ApplicationConfig');
+    protected function setUp()
+    {
+        $this->sm = Bootstrap::getServiceManager();
+        $applicationConfig = $this->sm->get('ApplicationConfig');
 
-		$this->setApplicationConfig($applicationConfig);
-	}
+        $this->setApplicationConfig($applicationConfig);
+    }
 
-	public function testDefaultRouteToList()
-	{
-		$blogPostRepoMock = $this->getMockBuilder('MaglBlog\Repository\BlogPostRepository')
-			->disableOriginalConstructor()
-			->getMock();
+    public function testDefaultRouteToList()
+    {
+        $blogPostRepoMock = $this->getMockBuilder('MaglBlog\Repository\BlogPostRepository')
+            ->disableOriginalConstructor()
+            ->getMock();
 
-		$blogPostRepoMock->expects($this->once())
-			->method('findBy')
-			->will($this->returnValue(array()));
+        $blogPostRepoMock->expects($this->once())
+            ->method('findBy')
+            ->will($this->returnValue(array()));
 
-		$serviceManager = $this->getApplicationServiceLocator();
-		$serviceManager->setAllowOverride(true);
-		$serviceManager->setService('MaglBlog\BlogPostRepository', $blogPostRepoMock);
-
-
-		$this->dispatch('/blog');
-
-		$this->assertResponseStatusCode(200);
-		$this->assertModuleName('MaglBlog');
-		$this->assertControllerName('MaglBlog\Controller\Blog');
-		$this->assertActionName('list');
-	}
-
-	public function testPostNotFound()
-	{
-		$blogPostRepoMock = $this->getMockBuilder('MaglBlog\Repository\BlogPostRepository')
-			->disableOriginalConstructor()
-			->getMock();
-
-		$blogPostRepoMock->expects($this->once())
-			->method('find')
-			->will($this->returnValue(array()));
-
-		$serviceManager = $this->getApplicationServiceLocator();
-		$serviceManager->setAllowOverride(true);
-		$serviceManager->setService('MaglBlog\BlogPostRepository', $blogPostRepoMock);
+        $serviceManager = $this->getApplicationServiceLocator();
+        $serviceManager->setAllowOverride(true);
+        $serviceManager->setService('MaglBlog\BlogPostRepository', $blogPostRepoMock);
 
 
-		$this->dispatch('/blog/post/1');
+        $this->dispatch('/blog');
 
-		$this->assertResponseStatusCode(404);
-		$this->assertModuleName('MaglBlog');
-		$this->assertControllerName('MaglBlog\Controller\Blog');
-		$this->assertActionName('post');
-	}
+        $this->assertResponseStatusCode(200);
+        $this->assertModuleName('MaglBlog');
+        $this->assertControllerName('MaglBlog\Controller\Blog');
+        $this->assertActionName('list');
+    }
 
-	public function testPostRedirect()
-	{
+    public function testPostNotFound()
+    {
+        $blogPostRepoMock = $this->getMockBuilder('MaglBlog\Repository\BlogPostRepository')
+            ->disableOriginalConstructor()
+            ->getMock();
 
-		$blogPost = new BlogPost();
-		$blogPost->setId(1);
-		$blogPost->setTitle('This is a Test');
+        $blogPostRepoMock->expects($this->once())
+            ->method('find')
+            ->will($this->returnValue(array()));
 
-		$blogPostRepoMock = $this->getMockBuilder('MaglBlog\Repository\BlogPostRepository')
-			->disableOriginalConstructor()
-			->getMock();
-
-		$blogPostRepoMock->expects($this->once())
-			->method('find')
-			->will($this->returnValue($blogPost));
-
-		$serviceManager = $this->getApplicationServiceLocator();
-		$serviceManager->setAllowOverride(true);
-		$serviceManager->setService('MaglBlog\BlogPostRepository', $blogPostRepoMock);
+        $serviceManager = $this->getApplicationServiceLocator();
+        $serviceManager->setAllowOverride(true);
+        $serviceManager->setService('MaglBlog\BlogPostRepository', $blogPostRepoMock);
 
 
-		$this->dispatch('/blog/post/1');
+        $this->dispatch('/blog/post/1');
 
-		$this->assertResponseStatusCode(301);
-		$this->assertModuleName('MaglBlog');
-		$this->assertControllerName('MaglBlog\Controller\Blog');
-		$this->assertActionName('post');
-	}
+        $this->assertResponseStatusCode(404);
+        $this->assertModuleName('MaglBlog');
+        $this->assertControllerName('MaglBlog\Controller\Blog');
+        $this->assertActionName('post');
+    }
 
-	public function testPostFound()
-	{
-		$blogPost = new BlogPost();
-		$blogPost->setId(1);
-		$blogPost->setTitle('This is a Test');
-		$blogPost->setCreateDate(new DateTime('now'));
-		$blogPost->setUpdateDate(new DateTime('now'));
+    public function testPostRedirect()
+    {
 
-		$blogPostRepoMock = $this->getMockBuilder('MaglBlog\Repository\BlogPostRepository')
-			->disableOriginalConstructor()
-			->getMock();
+        $blogPost = new BlogPost();
+        $blogPost->setId(1);
+        $blogPost->setTitle('This is a Test');
 
-		$blogPostRepoMock->expects($this->once())
-			->method('find')
-			->will($this->returnValue($blogPost));
+        $blogPostRepoMock = $this->getMockBuilder('MaglBlog\Repository\BlogPostRepository')
+            ->disableOriginalConstructor()
+            ->getMock();
 
-		$serviceManager = $this->getApplicationServiceLocator();
-		$serviceManager->setAllowOverride(true);
-		$serviceManager->setService('MaglBlog\BlogPostRepository', $blogPostRepoMock);
+        $blogPostRepoMock->expects($this->once())
+            ->method('find')
+            ->will($this->returnValue($blogPost));
+
+        $serviceManager = $this->getApplicationServiceLocator();
+        $serviceManager->setAllowOverride(true);
+        $serviceManager->setService('MaglBlog\BlogPostRepository', $blogPostRepoMock);
 
 
-		$this->dispatch('/blog/post/1/this-is-a-test');
+        $this->dispatch('/blog/post/1');
 
-		$this->assertResponseStatusCode(200);
-		$this->assertModuleName('MaglBlog');
-		$this->assertControllerName('MaglBlog\Controller\Blog');
-		$this->assertActionName('post');
-	}
+        $this->assertResponseStatusCode(301);
+        $this->assertModuleName('MaglBlog');
+        $this->assertControllerName('MaglBlog\Controller\Blog');
+        $this->assertActionName('post');
+    }
+
+    public function testPostFound()
+    {
+        $blogPost = new BlogPost();
+        $blogPost->setId(1);
+        $blogPost->setTitle('This is a Test');
+        $blogPost->setCreateDate(new DateTime('now'));
+        $blogPost->setUpdateDate(new DateTime('now'));
+
+        $blogPostRepoMock = $this->getMockBuilder('MaglBlog\Repository\BlogPostRepository')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $blogPostRepoMock->expects($this->once())
+            ->method('find')
+            ->will($this->returnValue($blogPost));
+
+        $serviceManager = $this->getApplicationServiceLocator();
+        $serviceManager->setAllowOverride(true);
+        $serviceManager->setService('MaglBlog\BlogPostRepository', $blogPostRepoMock);
+
+
+        $this->dispatch('/blog/post/1/this-is-a-test');
+
+        $this->assertResponseStatusCode(200);
+        $this->assertModuleName('MaglBlog');
+        $this->assertControllerName('MaglBlog\Controller\Blog');
+        $this->assertActionName('post');
+    }
 }

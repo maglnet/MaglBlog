@@ -16,65 +16,65 @@ use Zend\View\Model\ViewModel;
 class BlogPostAdminController extends AbstractBlogAdminController
 {
 
-	public function listAction()
-	{
-		$blogPostRepo = $this->getObjectManager()->getRepository('\MaglBlog\Entity\BlogPost');
-		$blogPosts = $blogPostRepo->findBy(array(), array('createDate' => 'DESC'));
+    public function listAction()
+    {
+        $blogPostRepo = $this->getObjectManager()->getRepository('\MaglBlog\Entity\BlogPost');
+        $blogPosts = $blogPostRepo->findBy(array(), array('createDate' => 'DESC'));
 
-		$listView = new ViewModel(array(
-			'blogPosts' => $blogPosts,
-		));
-		$listView->setTemplate('magl-blog/blog-admin/post/list');
-		return $this->getAdminView($listView);
-	}
+        $listView = new ViewModel(array(
+            'blogPosts' => $blogPosts,
+        ));
+        $listView->setTemplate('magl-blog/blog-admin/post/list');
+        return $this->getAdminView($listView);
+    }
 
-	public function editAction()
-	{
-		$id = (int) $this->params()->fromRoute('id', 0);
-		if (!$id) {
-			$blogPost = new BlogPost();
-		} else {
-			try {
-				$blogPost = $this->getObjectManager()->getRepository('\MaglBlog\Entity\BlogPost')->findOneBy(array('id' => $this->params('id')));
-			} catch (Exception $ex) {
-				return $this->redirect()->toRoute('zfcadmin/maglblog');
-			}
-		}
+    public function editAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            $blogPost = new BlogPost();
+        } else {
+            try {
+                $blogPost = $this->getObjectManager()->getRepository('\MaglBlog\Entity\BlogPost')->findOneBy(array('id' => $this->params('id')));
+            } catch (Exception $ex) {
+                return $this->redirect()->toRoute('zfcadmin/maglblog');
+            }
+        }
 
-		$form = new BlogPostForm($this->getObjectManager());
-		$form->setHydrator(new DoctrineObject($this->getObjectManager(), true));
-		$form->bind($blogPost);
-		$form->get('submit')->setAttribute('value', 'Edit');
+        $form = new BlogPostForm($this->getObjectManager());
+        $form->setHydrator(new DoctrineObject($this->getObjectManager(), true));
+        $form->bind($blogPost);
+        $form->get('submit')->setAttribute('value', 'Edit');
 
-		$tagString = $this->sm->get('MaglBlog\TagService')->getTagCollectionAsString($blogPost->getTags());
+        $tagString = $this->sm->get('MaglBlog\TagService')->getTagCollectionAsString($blogPost->getTags());
 
-		$blogPostFieldset = $form->get('blog_post');
-		$blogPostFieldset->get('tags-holder')->setValue($tagString);
+        $blogPostFieldset = $form->get('blog_post');
+        $blogPostFieldset->get('tags-holder')->setValue($tagString);
 
-		$request = $this->getRequest();
-		if ($request->isPost()) {
-			$form->setData($request->getPost());
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $form->setData($request->getPost());
 
-			if ($form->isValid()) {
-				$blogPostFieldset = $form->get('blog_post');
-				$tagsString = $blogPostFieldset->get('tags-holder')->getValue();
+            if ($form->isValid()) {
+                $blogPostFieldset = $form->get('blog_post');
+                $tagsString = $blogPostFieldset->get('tags-holder')->getValue();
 
-				$tagCollection = $this->sm->get('MaglBlog\TagService')->getTagCollectionFromString($tagsString);
-				$blogPost->setTags($tagCollection);
+                $tagCollection = $this->sm->get('MaglBlog\TagService')->getTagCollectionFromString($tagsString);
+                $blogPost->setTags($tagCollection);
 
-				$this->getObjectManager()->persist($blogPost);
-				$this->getObjectManager()->flush();
+                $this->getObjectManager()->persist($blogPost);
+                $this->getObjectManager()->flush();
 
-				// Redirect to list
-				return $this->redirect()->toRoute('zfcadmin/maglblog/post', array('action' => 'list'));
-			}
-		}
+                // Redirect to list
+                return $this->redirect()->toRoute('zfcadmin/maglblog/post', array('action' => 'list'));
+            }
+        }
 
-		$editView = new ViewModel(array(
-			'id' => $id,
-			'form' => $form,
-		));
-		$editView->setTemplate('magl-blog/blog-admin/post/edit');
-		return $this->getAdminView($editView);
-	}
+        $editView = new ViewModel(array(
+            'id' => $id,
+            'form' => $form,
+        ));
+        $editView->setTemplate('magl-blog/blog-admin/post/edit');
+        return $this->getAdminView($editView);
+    }
 }

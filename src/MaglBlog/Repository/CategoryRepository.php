@@ -14,18 +14,18 @@ use Doctrine\ORM\EntityRepository;
  *
  * @author matthias
  */
-class CategoryRepository extends EntityRepository 
+class CategoryRepository extends EntityRepository
 {
 
-	public function findWithActivePostsCount()
-	{
-		$queryBuilder = $this->createQueryBuilder('c')
-			->select('c as category')
-			->addSelect('count(p.id) as activeBlogCount')
-			->innerJoin('c.blogPosts','p')
-			->groupBy('c.id');
-		
-		$result = $queryBuilder->getQuery()->getResult();
-		return $result;
-	}
+    public function findWithActivePostsCount()
+    {
+        $queryBuilder = $this->createQueryBuilder('c')
+            ->select('c as category')
+            ->addSelect('count(p.id) as activeBlogCount')
+            ->innerJoin('c.blogPosts','p')
+            ->groupBy('c.id');
+
+        $result = $queryBuilder->getQuery()->getResult();
+        return $result;
+    }
 }

@@ -15,45 +15,45 @@ use Zend\View\Helper\AbstractHelper;
 class BlogWidgetTagCloud extends AbstractHelper
 {
 
-	/**
-	 * 
-	 * @var TagRepository
-	 */
-	private $tagRepo;
-	
-	/**
-	 *
-	 * @var array
-	 */
-	private $tagCloudOptions;
+    /**
+     *
+     * @var TagRepository
+     */
+    private $tagRepo;
 
-	public function __construct(TagRepository $tagRepository, MaglBlogOptions $blogOptions)
-	{
-		$this->tagRepo = $tagRepository;
-		$this->tagCloudOptions = $blogOptions->getTagCloud();
-	}
+    /**
+     *
+     * @var array
+     */
+    private $tagCloudOptions;
 
-	public function __invoke()
-	{
-		$tags = $this->tagRepo->findWithPostCount();
+    public function __construct(TagRepository $tagRepository, MaglBlogOptions $blogOptions)
+    {
+        $this->tagRepo = $tagRepository;
+        $this->tagCloudOptions = $blogOptions->getTagCloud();
+    }
 
-		$tagList = array();
-		foreach ($tags as $tag) {
-			$tagList[] = array(
-				'title' => $tag['tag']->getName(),
-				'weight' => $tag['postCount'],
-				'params' => array(
-				'url' => $this->getView()->url('maglblog/tag', array('tagUrlPart' => $tag['tag']->getUrlPart()))
-				)
-			);
-		}
-		
-		$tagCloud = new Cloud(array(
-			'cloudDecorator' => $this->tagCloudOptions['cloudDecorator'],
-			'tagDecorator' => $this->tagCloudOptions['tagDecorator'],
-			'tags' => $tagList,
-		));
+    public function __invoke()
+    {
+        $tags = $this->tagRepo->findWithPostCount();
 
-		return $this->getView()->render('magl-blog/widget/tag-cloud.phtml', array('tagCloud' => $tagCloud));
-	}
+        $tagList = array();
+        foreach ($tags as $tag) {
+            $tagList[] = array(
+                'title' => $tag['tag']->getName(),
+                'weight' => $tag['postCount'],
+                'params' => array(
+                'url' => $this->getView()->url('maglblog/tag', array('tagUrlPart' => $tag['tag']->getUrlPart()))
+                )
+            );
+        }
+
+        $tagCloud = new Cloud(array(
+            'cloudDecorator' => $this->tagCloudOptions['cloudDecorator'],
+            'tagDecorator' => $this->tagCloudOptions['tagDecorator'],
+            'tags' => $tagList,
+        ));
+
+        return $this->getView()->render('magl-blog/widget/tag-cloud.phtml', array('tagCloud' => $tagCloud));
+    }
 }

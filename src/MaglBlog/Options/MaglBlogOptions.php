@@ -21,25 +21,25 @@ class MaglBlogOptions extends AbstractOptions
      * @var array
      */
     protected $tagCloud;
-	
+
     /**
      * @var int
      */
     protected $recentPostsNum = 5;
-    
+
     /**
      * @var int
      */
     protected $archiveWidgetLimit = 24;
 
-	public function getTagCloud()
-	{
-		return $this->tagCloud;
-	}
+    public function getTagCloud()
+    {
+        return $this->tagCloud;
+    }
 
-	public function setTagCloud($tagCloud)
-	{
-		if (!is_array($tagCloud)) {
+    public function setTagCloud($tagCloud)
+    {
+        if (!is_array($tagCloud)) {
             throw new InvalidArgumentException(sprintf(
                 'tag_cloud config must be an array, %s given',
                 gettype($tagCloud)
@@ -54,19 +54,19 @@ class MaglBlogOptions extends AbstractOptions
             ));
         }
 
-		$this->tagCloud = $tagCloud;
+        $this->tagCloud = $tagCloud;
         return $this;
-	}
-	
-	public function getRecentPostsNum()
-	{
-		return $this->recentPostsNum;
-	}
+    }
 
-	public function setRecentPostsNum($recentPostsNum)
-	{
-		$this->recentPostsNum = $recentPostsNum;
-	}
+    public function getRecentPostsNum()
+    {
+        return $this->recentPostsNum;
+    }
+
+    public function setRecentPostsNum($recentPostsNum)
+    {
+        $this->recentPostsNum = $recentPostsNum;
+    }
 
     public function getArchiveWidgetLimit()
     {

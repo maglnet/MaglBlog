@@ -21,38 +21,38 @@ use Zend\View\Model\ViewModel;
 class BlogPostService implements FactoryInterface
 {
 
-	/**
-	 *
-	 * @var BlogPostRepository
-	 */
-	private $blogPostRepo;
+    /**
+     *
+     * @var BlogPostRepository
+     */
+    private $blogPostRepo;
 
-	public function createService(ServiceLocatorInterface $serviceLocator)
-	{
-		$this->blogPostRepo = $serviceLocator->get('MaglBlog\BlogPostRepository');
-		return $this;
-	}
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        $this->blogPostRepo = $serviceLocator->get('MaglBlog\BlogPostRepository');
+        return $this;
+    }
 
-	public function getRecent($limit)
-	{
-		$recentBlogPosts = $this->blogPostRepo->findRecent($limit);
-		return $recentBlogPosts;
-	}
+    public function getRecent($limit)
+    {
+        $recentBlogPosts = $this->blogPostRepo->findRecent($limit);
+        return $recentBlogPosts;
+    }
 
-	/**
-	 * 
-	 * @param array|Collection $blogPosts
-	 * @return ViewModel
-	 */
-	public function getListView($blogPosts)
-	{
-		$view = new ViewModel();
-		$view->setTemplate('magl-blog/blog/list');
-		foreach ($blogPosts as $post) {
-			$blogEntryView = new ViewModel(array('post' => $post));
-			$blogEntryView->setTemplate('magl-blog/blog/list-entry');
-			$view->addChild($blogEntryView, 'blogEntries', true);
-		}
-		return $view;
-	}
+    /**
+     *
+     * @param array|Collection $blogPosts
+     * @return ViewModel
+     */
+    public function getListView($blogPosts)
+    {
+        $view = new ViewModel();
+        $view->setTemplate('magl-blog/blog/list');
+        foreach ($blogPosts as $post) {
+            $blogEntryView = new ViewModel(array('post' => $post));
+            $blogEntryView->setTemplate('magl-blog/blog/list-entry');
+            $view->addChild($blogEntryView, 'blogEntries', true);
+        }
+        return $view;
+    }
 }

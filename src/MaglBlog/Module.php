@@ -21,62 +21,62 @@ use MaglBlog\View\Helper\BlogWidgetTagCloud;
 class Module
 {
 
-	public function getAutoloaderConfig()
-	{
-		return array(
-			'Zend\Loader\StandardAutoloader' => array(
-				'namespaces' => array(
-					__NAMESPACE__ => __DIR__,
-				),
-			),
-		);
-	}
+    public function getAutoloaderConfig()
+    {
+        return array(
+            'Zend\Loader\StandardAutoloader' => array(
+                'namespaces' => array(
+                    __NAMESPACE__ => __DIR__,
+                ),
+            ),
+        );
+    }
 
-	public function getConfig()
-	{
-		return include __DIR__ . '/../../config/module.config.php';
-	}
+    public function getConfig()
+    {
+        return include __DIR__ . '/../../config/module.config.php';
+    }
 
-	public function getModuleDependencies()
-	{
-		return array(
-			'DoctrineModule',
-			'DoctrineORMModule',
-			'ZfcAdmin',
-		);
-	}
+    public function getModuleDependencies()
+    {
+        return array(
+            'DoctrineModule',
+            'DoctrineORMModule',
+            'ZfcAdmin',
+        );
+    }
 
-	public function getViewHelperConfig()
-	{
-		return array(
-			'factories' => array(
-				'BlogUrlToPost' => function($sl) {
-					return new BlogUrlToPost();
-				},
-				'BlogWidgetTagCloud' => function($sl) {
-					$tagRepository = $sl->getServiceLocator()->get('MaglBlog\TagRepository');
-					$blogOptions = $sl->getServiceLocator()->get('MaglBlog\BlogOptions');
+    public function getViewHelperConfig()
+    {
+        return array(
+            'factories' => array(
+                'BlogUrlToPost' => function ($sl) {
+                    return new BlogUrlToPost();
+                },
+                'BlogWidgetTagCloud' => function ($sl) {
+                    $tagRepository = $sl->getServiceLocator()->get('MaglBlog\TagRepository');
+                    $blogOptions = $sl->getServiceLocator()->get('MaglBlog\BlogOptions');
 
-					return new BlogWidgetTagCloud($tagRepository, $blogOptions);
-				},
-				'BlogWidgetCategories' => function($sl) {
-					$categoryRepository = $sl->getServiceLocator()->get('MaglBlog\CategoryRepository');
+                    return new BlogWidgetTagCloud($tagRepository, $blogOptions);
+                },
+                'BlogWidgetCategories' => function ($sl) {
+                    $categoryRepository = $sl->getServiceLocator()->get('MaglBlog\CategoryRepository');
 
-					return new BlogWidgetCategories($categoryRepository);
-				},
-				'BlogWidgetRecentPosts' => function($sl) {
-					$blogPostRepository = $sl->getServiceLocator()->get('MaglBlog\BlogPostRepository');
-					$blogOptions = $sl->getServiceLocator()->get('MaglBlog\BlogOptions');
+                    return new BlogWidgetCategories($categoryRepository);
+                },
+                'BlogWidgetRecentPosts' => function ($sl) {
+                    $blogPostRepository = $sl->getServiceLocator()->get('MaglBlog\BlogPostRepository');
+                    $blogOptions = $sl->getServiceLocator()->get('MaglBlog\BlogOptions');
 
-					return new BlogWidgetRecentPosts($blogPostRepository, $blogOptions);
-				},
-				'BlogWidgetArchive' => function($sl) {
-					$blogPostRepository = $sl->getServiceLocator()->get('MaglBlog\BlogPostRepository');
-					$blogOptions = $sl->getServiceLocator()->get('MaglBlog\BlogOptions');
+                    return new BlogWidgetRecentPosts($blogPostRepository, $blogOptions);
+                },
+                'BlogWidgetArchive' => function ($sl) {
+                    $blogPostRepository = $sl->getServiceLocator()->get('MaglBlog\BlogPostRepository');
+                    $blogOptions = $sl->getServiceLocator()->get('MaglBlog\BlogOptions');
 
-					return new BlogWidgetArchive($blogPostRepository, $blogOptions);
-				},
-			),
-		);
-	}
+                    return new BlogWidgetArchive($blogPostRepository, $blogOptions);
+                },
+            ),
+        );
+    }
 }

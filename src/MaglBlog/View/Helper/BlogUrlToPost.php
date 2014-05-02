@@ -17,16 +17,17 @@ use Zend\View\Helper\AbstractHelper;
  */
 class BlogUrlToPost extends AbstractHelper
 {
-	
-	public function __invoke(BlogPost $blogPost){
-		$url = $this
-			->getView()
-			->url('maglblog/post', 
-				array(
-					'id' => $blogPost->getId(),
-					'title' => $blogPost->getTitleForUrl()
-				)
-			);
-		return $url;
-	}
+
+    public function __invoke(BlogPost $blogPost)
+    {
+        $url = $this
+            ->getView()
+            ->url('maglblog/post',
+                array(
+                    'id' => $blogPost->getId(),
+                    'title' => $blogPost->getTitleForUrl()
+                )
+            );
+        return $url;
+    }
 }

@@ -16,8 +16,8 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class BlogPostFactory extends BaseFactory
 {
-	public function createService(ServiceLocatorInterface $serviceLocator)
-	{
-		return $this->createServiceForClass('\MaglBlog\Entity\BlogPost', $serviceLocator);
-	}
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        return $this->createServiceForClass('\MaglBlog\Entity\BlogPost', $serviceLocator);
+    }
 }

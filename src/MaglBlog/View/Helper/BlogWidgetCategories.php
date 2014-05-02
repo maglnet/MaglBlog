@@ -17,19 +17,20 @@ use Zend\View\Helper\AbstractHelper;
  */
 class BlogWidgetCategories extends AbstractHelper
 {
-	/**
-	 * 
-	 * @var CategoryRepository
-	 */
-	private $categoryRepo;
-	
-	public function __construct(CategoryRepository $categoryRepository)
-	{
-		$this->categoryRepo = $categoryRepository;
-	}
-	
-	public function __invoke(){
-		$categories = $this->categoryRepo->findWithActivePostsCount();
-		return $this->getView()->render('magl-blog/widget/category-list.phtml', array('categories' => $categories));
-	}
+    /**
+     *
+     * @var CategoryRepository
+     */
+    private $categoryRepo;
+
+    public function __construct(CategoryRepository $categoryRepository)
+    {
+        $this->categoryRepo = $categoryRepository;
+    }
+
+    public function __invoke()
+    {
+        $categories = $this->categoryRepo->findWithActivePostsCount();
+        return $this->getView()->render('magl-blog/widget/category-list.phtml', array('categories' => $categories));
+    }
 }

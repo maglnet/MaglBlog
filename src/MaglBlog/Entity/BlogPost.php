@@ -14,233 +14,233 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="MaglBlog\Repository\BlogPostRepository")
  * @ORM\Table(name="maglblog_blogpost")
- * 
+ *
  */
 class BlogPost
 {
 
-	/**
-	 * 
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 * @ORM\Column(type="integer")
-	 */
-	protected $id;
+    /**
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
 
-	/**
-	 * 
-	 * @ORM\Column(type="string") 
-	 */
-	protected $title;
+    /**
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $title;
 
-	/**
-	 * 
-	 * @ORM\Column(type="text", name="teaser_text")
-	 */
-	protected $teaserText;
+    /**
+     *
+     * @ORM\Column(type="text", name="teaser_text")
+     */
+    protected $teaserText;
 
-	/**
-	 * 
-	 *  @ORM\Column(type="text")
-	 */
-	protected $text;
+    /**
+     *
+     *  @ORM\Column(type="text")
+     */
+    protected $text;
 
-	/**
-	 * 
-	 *  @ORM\Column(type="datetime", name="create_date")
-	 */
-	protected $createDate;
+    /**
+     *
+     *  @ORM\Column(type="datetime", name="create_date")
+     */
+    protected $createDate;
 
-	/**
-	 * 
-	 *  @ORM\Column(type="datetime", name="update_date")
-	 */
-	protected $updateDate;
+    /**
+     *
+     *  @ORM\Column(type="datetime", name="update_date")
+     */
+    protected $updateDate;
 
-	/**
-	 * 
-	 * @ORM\Column(type="integer", name="author_id")
-	 */
-	protected $authorId;
+    /**
+     *
+     * @ORM\Column(type="integer", name="author_id")
+     */
+    protected $authorId;
 
-	/**
-	 * 
-	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Tag", cascade={"persist"})
-	 * @ORM\JoinTable(name="maglblog_blogpost_tag", 
-	 *              joinColumns={@ORM\JoinColumn(name="blogpost_id", referencedColumnName = "id")}, 
-	 *              inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")})
-	 */
-	protected $tags;
+    /**
+     *
+     * @var Collection
+     * @ORM\ManyToMany(targetEntity="Tag", cascade={"persist"})
+     * @ORM\JoinTable(name="maglblog_blogpost_tag",
+     *              joinColumns={@ORM\JoinColumn(name="blogpost_id", referencedColumnName = "id")},
+     *              inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")})
+     */
+    protected $tags;
 
-	/**
-	 * 
-	 * @ORM\ManyToOne(targetEntity="Category", fetch="EAGER")
-	 */
-	protected $category;
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="Category", fetch="EAGER")
+     */
+    protected $category;
 
-	public function __construct()
-	{
-		$this->tags = new ArrayCollection();
-	}
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
 
-	public function getId()
-	{
-		return $this->id;
-	}
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	public function getTitle()
-	{
-		return $this->title;
-	}
+    public function getTitle()
+    {
+        return $this->title;
+    }
 
-	public function getTeaserText()
-	{
-		return $this->teaserText;
-	}
+    public function getTeaserText()
+    {
+        return $this->teaserText;
+    }
 
-	public function getText()
-	{
-		return $this->text;
-	}
+    public function getText()
+    {
+        return $this->text;
+    }
 
-	public function getCreateDate()
-	{
-		return $this->createDate;
-	}
+    public function getCreateDate()
+    {
+        return $this->createDate;
+    }
 
-	public function getUpdateDate()
-	{
-		return $this->updateDate;
-	}
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
+    }
 
-	public function getAuthorId()
-	{
-		return $this->authorId;
-	}
+    public function getAuthorId()
+    {
+        return $this->authorId;
+    }
 
-	public function setId($id)
-	{
-		$this->id = $id;
-	}
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
-	public function setTitle($title)
-	{
-		$this->title = $title;
-	}
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
 
-	public function setTeaserText($teaserText)
-	{
-		$this->teaserText = $teaserText;
-	}
+    public function setTeaserText($teaserText)
+    {
+        $this->teaserText = $teaserText;
+    }
 
-	public function setText($text)
-	{
-		$this->text = $text;
-	}
+    public function setText($text)
+    {
+        $this->text = $text;
+    }
 
-	public function setCreateDate($create_date)
-	{
-		$this->createDate = $create_date;
-	}
+    public function setCreateDate($create_date)
+    {
+        $this->createDate = $create_date;
+    }
 
-	public function setUpdateDate($update_date)
-	{
-		$this->updateDate = $update_date;
-	}
+    public function setUpdateDate($update_date)
+    {
+        $this->updateDate = $update_date;
+    }
 
-	public function setAuthorId($author_id)
-	{
-		$this->authorId = $author_id;
-	}
+    public function setAuthorId($author_id)
+    {
+        $this->authorId = $author_id;
+    }
 
-	/**
-	 * 
-	 * @param Collection $tags
-	 */
-	public function addTags(Collection $tags)
-	{
-		foreach ($tags as $tag) {
-			$this->addTag($tag);
-		}
-	}
+    /**
+     *
+     * @param Collection $tags
+     */
+    public function addTags(Collection $tags)
+    {
+        foreach ($tags as $tag) {
+            $this->addTag($tag);
+        }
+    }
 
-	/**
-	 * 
-	 * @param Collection $tags
-	 */
-	public function setTags(Collection $tags)
-	{
-		$this->tags = $tags;
-	}
+    /**
+     *
+     * @param Collection $tags
+     */
+    public function setTags(Collection $tags)
+    {
+        $this->tags = $tags;
+    }
 
-	/**
-	 * 
-	 * @param Tag $tag
-	 */
-	public function addTag(Tag $tag)
-	{
-		if(!$this->tags->contains($this)){
-			$this->tags->add($tag);
-		}
-		
-		if(!$tag->getBlogPosts()->contains($tag)){
-			$tag->addBlogPost($this);
-		}
-		
-	}
+    /**
+     *
+     * @param Tag $tag
+     */
+    public function addTag(Tag $tag)
+    {
+        if(!$this->tags->contains($this)){
+            $this->tags->add($tag);
+        }
 
-	/**
-	 * 
-	 * @param Collection $tags
-	 */
-	public function removeTags(Collection $tags)
-	{
-		foreach ($tags as $tag) {
-			$tag->removeBlogPost($this);
-			$this->removeTag($tag);
-		}
-	}
-	/**
-	 * 
-	 * @param Tag $tag
-	 */
-	public function removeTag(Tag $tag)
-	{
-		$this->tags->removeElement($tag);
-	}
+        if(!$tag->getBlogPosts()->contains($tag)){
+            $tag->addBlogPost($this);
+        }
 
-	/**
-	 * 
-	 * @return Collection
-	 */
-	public function getTags()
-	{
-		return $this->tags;
-	}
+    }
 
-	/**
-	 * 
-	 * @return Category
-	 */
-	public function getCategory()
-	{
-		return $this->category;
-	}
+    /**
+     *
+     * @param Collection $tags
+     */
+    public function removeTags(Collection $tags)
+    {
+        foreach ($tags as $tag) {
+            $tag->removeBlogPost($this);
+            $this->removeTag($tag);
+        }
+    }
+    /**
+     *
+     * @param Tag $tag
+     */
+    public function removeTag(Tag $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
 
-	/**
-	 * 
-	 * @param Category $category
-	 */
-	public function setCategory(Category $category = null)
-	{
-		$this->category = $category;
-	}
+    /**
+     *
+     * @return Collection
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
 
-	public function getTitleForUrl()
-	{
-		$urlPart = preg_replace('/[^a-z0-9]/i', '-', $this->getTitle());
-		$urlPart = preg_replace('/-{2,}/', '-', $urlPart);
-		return strtolower(trim($urlPart, '- '));
-	}
+    /**
+     *
+     * @return Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     *
+     * @param Category $category
+     */
+    public function setCategory(Category $category = null)
+    {
+        $this->category = $category;
+    }
+
+    public function getTitleForUrl()
+    {
+        $urlPart = preg_replace('/[^a-z0-9]/i', '-', $this->getTitle());
+        $urlPart = preg_replace('/-{2,}/', '-', $urlPart);
+        return strtolower(trim($urlPart, '- '));
+    }
 }

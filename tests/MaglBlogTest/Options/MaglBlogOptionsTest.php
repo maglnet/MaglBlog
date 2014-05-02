@@ -16,79 +16,79 @@ namespace MaglBlogTest\Options;
 class MaglBlogOptionsTest extends \PHPUnit_Framework_TestCase
 {
 
-	public function testShippedConfigOK()
-	{
+    public function testShippedConfigOK()
+    {
 
-		$sm = \MaglBlogTest\Bootstrap::getServiceManager();
-		$config = $sm->get('config');
+        $sm = \MaglBlogTest\Bootstrap::getServiceManager();
+        $config = $sm->get('config');
 
-		$blogOptions = new \MaglBlog\Options\MaglBlogOptions($config['magl_blog']);
+        $blogOptions = new \MaglBlog\Options\MaglBlogOptions($config['magl_blog']);
 
-		$this->assertTrue(is_array($blogOptions->getTagCloud()));
-	}
+        $this->assertTrue(is_array($blogOptions->getTagCloud()));
+    }
 
-	public function testTagCloudWidgetNoArrayGiven()
-	{
-		$sm = \MaglBlogTest\Bootstrap::getServiceManager();
+    public function testTagCloudWidgetNoArrayGiven()
+    {
+        $sm = \MaglBlogTest\Bootstrap::getServiceManager();
 
-		$blogOptions = new \MaglBlog\Options\MaglBlogOptions();
+        $blogOptions = new \MaglBlog\Options\MaglBlogOptions();
 
-		$this->setExpectedException('InvalidArgumentException');
+        $this->setExpectedException('InvalidArgumentException');
 
-		$blogOptions->setTagCloud('no array');
-	}
+        $blogOptions->setTagCloud('no array');
+    }
 
-	public function testTagCloudWidgetMissingTagDecorator()
-	{
-		$sm = \MaglBlogTest\Bootstrap::getServiceManager();
+    public function testTagCloudWidgetMissingTagDecorator()
+    {
+        $sm = \MaglBlogTest\Bootstrap::getServiceManager();
 
-		$blogOptions = new \MaglBlog\Options\MaglBlogOptions();
+        $blogOptions = new \MaglBlog\Options\MaglBlogOptions();
 
-		$this->setExpectedException('InvalidArgumentException');
+        $this->setExpectedException('InvalidArgumentException');
 
-		$blogOptions->setTagCloud(array(
-			'cloudDecorator' => array(
-				'foo' => 'bar',
-			)
-		));
-	}
+        $blogOptions->setTagCloud(array(
+            'cloudDecorator' => array(
+                'foo' => 'bar',
+            )
+        ));
+    }
 
-	public function testTagCloudWidgetMissingCloudDecorator()
-	{
-		$sm = \MaglBlogTest\Bootstrap::getServiceManager();
+    public function testTagCloudWidgetMissingCloudDecorator()
+    {
+        $sm = \MaglBlogTest\Bootstrap::getServiceManager();
 
-		$blogOptions = new \MaglBlog\Options\MaglBlogOptions();
+        $blogOptions = new \MaglBlog\Options\MaglBlogOptions();
 
-		$this->setExpectedException('InvalidArgumentException');
+        $this->setExpectedException('InvalidArgumentException');
 
-		$blogOptions->setTagCloud(array(
-			'tagDecorator' => array(
-				'foo' => 'bar',
-			)
-		));
-	}
+        $blogOptions->setTagCloud(array(
+            'tagDecorator' => array(
+                'foo' => 'bar',
+            )
+        ));
+    }
 
-	public function testSetGetRecentPostsNum()
-	{
-		$sm = \MaglBlogTest\Bootstrap::getServiceManager();
+    public function testSetGetRecentPostsNum()
+    {
+        $sm = \MaglBlogTest\Bootstrap::getServiceManager();
 
-		$postsNum = rand(1,100);
+        $postsNum = rand(1,100);
 
-		$blogOptions = new \MaglBlog\Options\MaglBlogOptions();
+        $blogOptions = new \MaglBlog\Options\MaglBlogOptions();
 
-		$blogOptions->setRecentPostsNum($postsNum);
-		$this->assertEquals($postsNum, $blogOptions->getRecentPostsNum());
-	}
-    
-	public function testSetGetArchiveWidgetLimit()
-	{
-		$sm = \MaglBlogTest\Bootstrap::getServiceManager();
+        $blogOptions->setRecentPostsNum($postsNum);
+        $this->assertEquals($postsNum, $blogOptions->getRecentPostsNum());
+    }
 
-		$postsNum = rand(1,100);
+    public function testSetGetArchiveWidgetLimit()
+    {
+        $sm = \MaglBlogTest\Bootstrap::getServiceManager();
 
-		$blogOptions = new \MaglBlog\Options\MaglBlogOptions();
+        $postsNum = rand(1,100);
 
-		$blogOptions->setArchiveWidgetLimit($postsNum);
-		$this->assertEquals($postsNum, $blogOptions->getArchiveWidgetLimit());
-	}
+        $blogOptions = new \MaglBlog\Options\MaglBlogOptions();
+
+        $blogOptions->setArchiveWidgetLimit($postsNum);
+        $this->assertEquals($postsNum, $blogOptions->getArchiveWidgetLimit());
+    }
 }
