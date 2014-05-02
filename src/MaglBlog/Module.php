@@ -8,6 +8,7 @@
 namespace MaglBlog;
 
 use MaglBlog\View\Helper\BlogUrlToPost;
+use MaglBlog\View\Helper\BlogWidgetArchive;
 use MaglBlog\View\Helper\BlogWidgetCategories;
 use MaglBlog\View\Helper\BlogWidgetRecentPosts;
 use MaglBlog\View\Helper\BlogWidgetTagCloud;
@@ -68,6 +69,12 @@ class Module
 					$blogOptions = $sl->getServiceLocator()->get('MaglBlog\BlogOptions');
 
 					return new BlogWidgetRecentPosts($blogPostRepository, $blogOptions);
+				},
+				'BlogWidgetArchive' => function($sl) {
+					$blogPostRepository = $sl->getServiceLocator()->get('MaglBlog\BlogPostRepository');
+					$blogOptions = $sl->getServiceLocator()->get('MaglBlog\BlogOptions');
+
+					return new BlogWidgetArchive($blogPostRepository, $blogOptions);
 				},
 			),
 		);

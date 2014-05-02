@@ -6,6 +6,7 @@
  */
 return array(
 	'magl_blog' => array(
+		'archive_widget_limit' => 24, //limit to x entries shown in the widget, each entry equals one month
 		'recent_posts_num' => 5,
 		'tag_cloud' => array(
 			'cloudDecorator' => array(

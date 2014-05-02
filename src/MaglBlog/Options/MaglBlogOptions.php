@@ -26,6 +26,11 @@ class MaglBlogOptions extends AbstractOptions
      * @var int
      */
     protected $recentPostsNum = 5;
+    
+    /**
+     * @var int
+     */
+    protected $archiveWidgetLimit = 24;
 
 	public function getTagCloud()
 	{
@@ -63,8 +68,14 @@ class MaglBlogOptions extends AbstractOptions
 		$this->recentPostsNum = $recentPostsNum;
 	}
 
+    public function getArchiveWidgetLimit()
+    {
+        return $this->archiveWidgetLimit;
+    }
 
-	
-
+    public function setArchiveWidgetLimit($archiveWidgetLimit)
+    {
+        $this->archiveWidgetLimit = $archiveWidgetLimit;
+    }
 
 }

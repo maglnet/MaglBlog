@@ -1,0 +1,28 @@
+<?php
+
+/* 
+ * @author Matthias Glaub <magl@magl.net>
+ * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
+ */
+
+?>
+<div class="panel panel-default">
+	<div class="panel-heading">Blog Archive</div>
+	<div class="panel-body">
+        <ul class="list-unstyled">
+        <?php foreach ($archiveDateInfo as $row): ?>
+            <li>
+                <a href="<?=$this->url('maglblog/archive', array('year' => $row['year'], 'month' => sprintf('%02s', $row['month'])))?>">
+                    <?php
+                    /* @var $date DateTime */
+                    $date = DateTime::createFromFormat('Y-m-d', $row['year'].'-'.$row['month'].'-01');
+                    echo $date->format('Y - F');
+                    ?>
+                    <?=strftime("%B,", strtotime($row['year'].'-'.$row['month'].'-01'));?>
+                </a>
+            </li>
+        <?php endforeach; ?>
+        </ul>
+	</div>
+</div>
+

@@ -72,4 +72,27 @@ class BlogPostRepository extends EntityRepository
 		return $dates;
 	}
 	
+    public function getArchiveDateInfo($limit = null){
+        
+        $limitSQL = (null != $limit ? ' LIMIT '. (int) $limit : '');
+        
+        $rsm = $this->createResultSetMappingBuilder('what');
+        
+        $rsm->addScalarResult('val_year', 'year');
+        $rsm->addScalarResult('val_month', 'month');
+        $rsm->addScalarResult('val_count', 'count');
+        $query = $this->getEntityManager()->createNativeQuery(
+            'SELECT YEAR(create_date) AS val_year, MONTH(create_date) AS val_month, COUNT(id) AS val_count'.
+            ' FROM maglblog_blogpost'.
+            ' GROUP BY val_year, val_month'.
+            ' ORDER BY val_year DESC, val_month DESC'.
+            $limitSQL
+            , $rsm
+            );
+        
+        $result = $query->getArrayResult();
+        
+        return $result;
+    }
+    
 }
