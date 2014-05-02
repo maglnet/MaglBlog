@@ -72,11 +72,23 @@ class MaglBlogOptionsTest extends \PHPUnit_Framework_TestCase
 	{
 		$sm = \MaglBlogTest\Bootstrap::getServiceManager();
 
-		$postsNum = 5;
+		$postsNum = rand(1,100);
 
 		$blogOptions = new \MaglBlog\Options\MaglBlogOptions();
 
 		$blogOptions->setRecentPostsNum($postsNum);
 		$this->assertEquals($postsNum, $blogOptions->getRecentPostsNum());
+	}
+    
+	public function testSetGetArchiveWidgetLimit()
+	{
+		$sm = \MaglBlogTest\Bootstrap::getServiceManager();
+
+		$postsNum = rand(1,100);
+
+		$blogOptions = new \MaglBlog\Options\MaglBlogOptions();
+
+		$blogOptions->setArchiveWidgetLimit($postsNum);
+		$this->assertEquals($postsNum, $blogOptions->getArchiveWidgetLimit());
 	}
 }
