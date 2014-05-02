@@ -31,7 +31,6 @@ class BlogPostRepository extends EntityRepository
 	}
 	
 	/**
-	 * @param integer $limit
 	 * @param integer $year
 	 * @param integer|null $month
 	 */
@@ -51,6 +50,10 @@ class BlogPostRepository extends EntityRepository
 		return $result;
 	}
 	
+	/**
+	 * @param integer $year
+	 * @param integer $month
+	 */
 	public function getStartEndDate($year, $month = null){
 		
 		$dates = array();
@@ -72,6 +75,9 @@ class BlogPostRepository extends EntityRepository
 		return $dates;
 	}
 	
+    /**
+     * @param integer $limit
+     */
     public function getArchiveDateInfo($limit = null){
         
         $limitSQL = (null != $limit ? ' LIMIT '. (int) $limit : '');
