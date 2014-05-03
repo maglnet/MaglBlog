@@ -18,7 +18,6 @@
                     $date = DateTime::createFromFormat('Y-m-d', $row['year'].'-'.$row['month'].'-01');
                     echo $date->format('Y - F');
                     ?>
-                    <?=strftime("%B,", strtotime($row['year'].'-'.$row['month'].'-01'));?>
                 </a>
             </li>
         <?php endforeach; ?>
