@@ -17,43 +17,43 @@ use Zend\View\Model\ViewModel;
 abstract class AbstractBlogAdminController extends AbstractActionController implements FactoryInterface
 {
 
-	/**
-	 *
-	 * @var ObjectManager
-	 */
-	protected $objectManager;
+    /**
+     *
+     * @var ObjectManager
+     */
+    protected $objectManager;
 
-	/**
-	 *
-	 * @var ServiceManager
-	 */
-	protected $sm;
+    /**
+     *
+     * @var ServiceManager
+     */
+    protected $sm;
 
-	/**
-	 * @param ViewModel $contentView
-	 */
-	protected function getAdminView($contentView)
-	{
-		$blogAdminView = new ViewModel();
-		$blogAdminView->setTemplate('magl-blog/blog-admin/admin-layout');
-		$blogAdminView->addChild($contentView, 'content');
-		return $blogAdminView;
-	}
+    /**
+     * @param ViewModel $contentView
+     */
+    protected function getAdminView($contentView)
+    {
+        $blogAdminView = new ViewModel();
+        $blogAdminView->setTemplate('magl-blog/blog-admin/admin-layout');
+        $blogAdminView->addChild($contentView, 'content');
+        return $blogAdminView;
+    }
 
-	public function createService(ServiceLocatorInterface $serviceLocator)
-	{
-		$this->objectManager = $serviceLocator->getServiceLocator()
-			->get('Doctrine\ORM\EntityManager');
-		$this->sm = $serviceLocator->getServiceLocator();
-		return $this;
-	}
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        $this->objectManager = $serviceLocator->getServiceLocator()
+            ->get('Doctrine\ORM\EntityManager');
+        $this->sm = $serviceLocator->getServiceLocator();
+        return $this;
+    }
 
-	/**
-	 * 
-	 * @return ObjectManager
-	 */
-	protected function getObjectManager()
-	{
-		return $this->objectManager;
-	}
+    /**
+     *
+     * @return ObjectManager
+     */
+    protected function getObjectManager()
+    {
+        return $this->objectManager;
+    }
 }
