@@ -6,5 +6,6 @@ tools:
         timeout: 900
     php_sim: true
     php_cpd: false
-    php_cs_fixer:
-        config: { level: psr2 }
+    php_code_sniffer:
+        config:
+            ruleset: PSR2
